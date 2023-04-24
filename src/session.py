@@ -27,7 +27,7 @@ class Session:
         print()
 
     @classmethod
-    def show_modes(cls):
+    def show_modes(cls) -> None:
         print()
         print("Available modes:")
         for idx,mode in enumerate(cls.modes.values()):
@@ -35,28 +35,28 @@ class Session:
 
     @classmethod
     def choose_mode(cls):
-            while True:
-                choice = input("Select one of the available options (number), or enter 'q' to exit: ").lower().strip()
+        while True:
+            choice = input("Select one of the available options (number), or enter 'q' to exit: ").lower().strip()
 
-                if choice == "q":
-                    print()
-                    sys.exit("Thank you for using InteLTool. See ya!")
+            if choice == "q":
+                print()
+                sys.exit("Thank you for using InteLTool. See ya!")
 
-                try:
-                    choice = int(choice)
-                except ValueError:
-                    print("Not a valid choice.")
-                    continue
-                
-                if choice in cls.modes.keys():
-                    print(f"{cls.modes[choice].capitalize()} mode selected.")
-                    return cls.modes[choice]
-                else:
-                    print("Not a valid choice.")
-                    continue
+            try:
+                choice = int(choice)
+            except ValueError:
+                print("Not a valid choice.")
+                continue
+            
+            if choice in cls.modes.keys():
+                print(f"{cls.modes[choice].capitalize()} mode selected.")
+                return cls.modes[choice]
+            else:
+                print("Not a valid choice.")
+                continue
 
     @staticmethod
-    def question_mode(user_id):
+    def question_mode(user_id: str) -> bool | None:
         print()
         print("--> Adding question mode: <--")
         print()
@@ -80,9 +80,11 @@ class Session:
             else:
                 adding_question = False
                 return False
+            
+        return None
     
     @staticmethod
-    def enable_disable_mode():
+    def enable_disable_mode() -> None:
         print()
         print("--> Enable/disable question mode: <--")
         print()
@@ -101,10 +103,11 @@ class Session:
             else:
                 print("Not a valid choice.")
                 continue
+        return None
             
     @staticmethod
-    def show_statistics(us_id):
-        stats = {}
+    def show_statistics(us_id: str) -> None:
+        stats: dict = {}
 
         # id,is_answered,question_id
         with open("../files/statistics.csv") as file:
@@ -122,6 +125,7 @@ class Session:
                         stats[line["question_id"]] = {"answers" : 1, "shown" : 1}
                     else:
                         stats[line["question_id"]] = {"answers" : 0, "shown" : 1}
+        
 
 
         # id,type,content,options,status,user_id
@@ -157,7 +161,7 @@ class Session:
                     continue
         return True
 
-    def practice_mode(self):
+    def practice_mode(self) -> None:
         
         practice_in_progress = True
 
@@ -179,6 +183,7 @@ class Session:
                     else:
                         print(f"Incorrect! The correct answer is: {question['answer']}")
                     entry.save_entry()
+
 
         
 
