@@ -45,14 +45,14 @@ class User:
         print(f"Welcome, {self.username}!")
     
     def create_new_id(self) -> int:
-        users = list(csv.reader(open("../users.csv")))
+        users = list(csv.reader(open("../files/users.csv")))
         if not users:
             return 0
         else:
             return int(users[-1][0]) + 1
 
     def save_new_user(self):
-        with open("../users.csv", "a", newline='') as file:
+        with open("../files/users.csv", "a", newline='') as file:
             fieldnames = ['user_id', 'username']
             writer = csv.DictWriter(file, fieldnames=fieldnames)
             writer.writerow({'user_id': self.id, 'username': self.username})
@@ -81,7 +81,7 @@ class User:
 
     def find_user(self, name) -> bool:
         # check if user exists
-        with open("../users.csv", 'r') as file:
+        with open("../files/users.csv", 'r') as file:
             reader = csv.DictReader(file)
             for line in reader:
                 if line["username"] == name:
@@ -92,7 +92,7 @@ class User:
 
 
     def get_user_id(self) -> str | None:
-        with open("../users.csv", "r") as file:
+        with open("../files/users.csv", "r") as file:
             reader = csv.DictReader(file)
             for line in reader:
                 if line["username"] == self.username:

@@ -1,4 +1,0 @@
-id,type,content,options,status,answer,user_id
-0,free-form,test,,enabled,test,1
-1,quiz,Test quiz,"{0: 'opt1', 1: 'opt2', 2: 'opt3'}",enabled,2,3
-2,free-form,testfree,,disabled,testanswer,3

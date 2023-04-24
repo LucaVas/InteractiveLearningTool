@@ -107,7 +107,7 @@ class Session:
         stats = {}
 
         # id,is_answered,question_id
-        with open("../statistics.csv") as file:
+        with open("../files/statistics.csv") as file:
             reader = csv.DictReader(file)
             for line in reader:
                 if line["question_id"] in stats:
@@ -125,7 +125,7 @@ class Session:
 
 
         # id,type,content,options,status,user_id
-        with open("../questions.csv") as file:
+        with open("../files/questions.csv") as file:
             reader = csv.DictReader(file)
             for line in reader:
                 if line["user_id"] == str(us_id):
@@ -145,7 +145,7 @@ class Session:
                         print("----------")
 
     def check_answer(self, question_id: str, answer: str) -> bool | Entry:
-        with open("../questions.csv", "r") as file:
+        with open("../files/questions.csv", "r") as file:
             reader = csv.DictReader(file)
             for question in reader:
                 if question['id'] == question_id:
@@ -161,7 +161,7 @@ class Session:
         
         practice_in_progress = True
 
-        with open("../questions.csv", "r") as file:
+        with open("../files/questions.csv", "r") as file:
             reader = csv.DictReader(file)
             while practice_in_progress:
                 for question in reader:

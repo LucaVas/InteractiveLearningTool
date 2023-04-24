@@ -31,7 +31,7 @@ class Entry():
         self._question_id = s
 
     def generate_id(self):
-        with open("../statistics.csv", "r") as file:
+        with open("..files/statistics.csv", "r") as file:
             lines = file.readlines()
             if lines[-1][0].isnumeric():
                 self.id = int(lines[-1][0]) + 1
@@ -39,7 +39,7 @@ class Entry():
                 self.id = 0
 
     def save_entry(self):
-        with open("../statistics.csv", "a", newline="") as file:
+        with open("..files/statistics.csv", "a", newline="") as file:
             self.generate_id()
             fieldnames = ["id", "is_answered", "question_id"]
             writer = csv.DictWriter(file, fieldnames=fieldnames)

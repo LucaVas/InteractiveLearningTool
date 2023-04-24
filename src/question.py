@@ -79,7 +79,7 @@ class Question:
     
 
     def set_id(self):
-        with open("../questions.csv", "r") as file:
+        with open("..files/questions.csv", "r") as file:
             lines = file.readlines()
             if lines[-1][0].isnumeric():
                 self.id = int(lines[-1][0]) + 1
@@ -181,7 +181,7 @@ class Question:
         choice = input("Would you like to save this question (Y/N)? ").lower().strip()
         if choice == "y":
             self.set_id()
-            with open("../questions.csv", "a", newline='') as file:
+            with open("..files/questions.csv", "a", newline='') as file:
                 fieldnames = ["id", "type", "content", "options", "status", "answer", "user_id"]
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 if self.type == "free-form":
@@ -203,7 +203,7 @@ class Question:
                 print("Not a valid question")
                 continue
             
-            with open("../questions.csv", "r") as file:
+            with open("..files/questions.csv", "r") as file:
                 reader = csv.DictReader(file)
                 for row in reader:
                     if row["id"] == id:
@@ -217,20 +217,20 @@ class Question:
     @staticmethod
     def disable(id):
         
-        file = pd.read_csv("../questions.csv")
+        file = pd.read_csv("..files/questions.csv")
         file.head(3)
         file.at[int(id), "status"]="disabled"
-        file.to_csv("../questions.csv", index=False)
+        file.to_csv("..files/questions.csv", index=False)
         print(f"Question with id: {id} is now disabled.")   
         return False
 
     @staticmethod
     def enable(id):
 
-        file = pd.read_csv("../questions.csv")
+        file = pd.read_csv("..files/questions.csv")
         file.head(3)
         file.at[int(id), "status"]="enabled"
-        file.to_csv("../questions.csv", index=False)
+        file.to_csv("..files/questions.csv", index=False)
         print(f"Question with id: {id} is now enabled.")      
         return False      
     
