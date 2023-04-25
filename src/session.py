@@ -107,7 +107,7 @@ class Session:
             
     @staticmethod
     def show_statistics(us_id: str) -> None:
-        stats: dict = {}
+        stats: dict[str, dict[str, int]] = {}
 
         # id,is_answered,question_id
         with open("../files/statistics.csv") as file:

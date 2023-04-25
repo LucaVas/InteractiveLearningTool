@@ -1,4 +1,5 @@
 import csv
+import uuid
 
 # User class is responsible for creating, updating and deleting new users
 class User:
@@ -44,12 +45,8 @@ class User:
     def welcome_new_user(self) -> None:
         print(f"Welcome, {self.username}!")
     
-    def create_new_id(self) -> int:
-        users = list(csv.reader(open("../files/users.csv")))
-        if not users:
-            return 0
-        else:
-            return int(users[-1][0]) + 1
+    def create_new_id(self) -> uuid.UUID:
+        return uuid.uuid1()
 
     def save_new_user(self):
         with open("../files/users.csv", "a", newline='') as file:
