@@ -1,4 +1,5 @@
 import csv
+import pandas as pd
 
 class Entry():
     def __init__(self, is_answered: bool, question_id: str) -> None:
@@ -38,9 +39,9 @@ class Entry():
             else:
                 self.id = 0
 
-    def save_entry(self):
-        with open("../files/statistics.csv", "a", newline="") as file:
-            self.generate_id()
-            fieldnames = ["id", "is_answered", "question_id"]
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writerow({"id": self.id, "is_answered": self.is_answered, "question_id": self.question_id})
+    def save_entry(self, question_id: str, is_answered: bool):
+        file = pd.read_csv("../files/questions.csv")
+        if is_answered is True:
+            file.at[question_id, int("times_answered")] += 1
+        file.at[question_id, int("times_shown")] += 1
+        file.to_csv("../files/questions.csv", index=False)

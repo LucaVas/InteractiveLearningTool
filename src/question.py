@@ -1,5 +1,6 @@
 import csv
 import pandas as pd
+import uuid
     
 class Question:
 
@@ -8,7 +9,7 @@ class Question:
         1: "free-form"
     }
 
-    def __init__(self, type=None, content=None, options={}) -> None:
+    def __init__(self, type=None, content=None, options=[]) -> None:
         self._type = type
         self._content = content
         self._options = options
@@ -74,17 +75,12 @@ class Question:
         return self._answer
     
     @answer.setter
-    def answer(self, a):
+    def answer(self, a) -> None:
         self._answer = a
     
 
-    def set_id(self):
-        with open("../files/questions.csv", "r") as file:
-            lines = file.readlines()
-            if lines[-1][0].isnumeric():
-                self.id = int(lines[-1][0]) + 1
-            else:
-                self.id = 0
+    def set_id(self) -> None:
+        self.id = uuid.uuid1()
 
 
     def select_question_type(self):
@@ -129,7 +125,7 @@ class Question:
                         print("The option cannot be blank.")
                         continue
                     else:
-                        self.options.update({i: opt})
+                        self.options.append(opt)
                         break
     
         else:
@@ -144,12 +140,12 @@ class Question:
                 answer = input("Enter the option number: ")
 
                 try:
-                    int(answer)
+                    answer = int(answer) - 1
                 except TypeError:
                     print("Not a valid option.")
                     continue
 
-                if int(answer) not in range(self.number_of_options):
+                if answer not in range(self.number_of_options):
                     print("Not one of the options available")
                     continue
 
@@ -172,8 +168,10 @@ class Question:
         print(f"    Type of question: {self.type}")
         print(f"    Question content: {self.content}")
         if self.type == "quiz":
-            print(f"    Question options: {self.options}")
-        print(f"    Question answer: {self.answer}")
+            print(f"    Options:")
+            for idx,opt in enumerate(self.options):
+                print(f"        {idx+1} - {opt}")
+        print(f"    Answer: {self.answer + 1}")
 
 
     def save_question(self, user_id):  
@@ -182,12 +180,12 @@ class Question:
         if choice == "y":
             self.set_id()
             with open("../files/questions.csv", "a", newline='') as file:
-                fieldnames = ["id", "type", "content", "options", "status", "answer", "user_id"]
+                fieldnames = ["id", "type", "content", "options", "status", "answer", "times_answered" ,"times_shown", "user_id"]
                 writer = csv.DictWriter(file, fieldnames=fieldnames)
                 if self.type == "free-form":
-                    writer.writerow({'id': self.id, "type": self.type, "content": self.content, "options": "", "status": self.status, "answer": self.answer, "user_id": user_id})
+                    writer.writerow({'id': self.id, "type": self.type, "content": self.content, "options": "", "status": self.status, "answer": self.answer, "times_answered": 0,"times_shown": 0, "user_id": user_id})
                 else:
-                    writer.writerow({'id': self.id, "type": self.type, "content": self.content, "options": self.options, "status": self.status, "answer": self.answer, "user_id": user_id})
+                    writer.writerow({'id': self.id, "type": self.type, "content": self.content, "options": self.options, "status": self.status, "answer": self.answer, "times_answered": 0,"times_shown": 0, "user_id": user_id})
 
             print("Question saved succesfully!")
         else:

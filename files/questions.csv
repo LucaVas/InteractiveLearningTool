@@ -1,4 +1,3 @@
-id,type,content,options,status,answer,user_id
-0,free-form,test,,enabled,test,1
-1,quiz,Test quiz,"{0: 'opt1', 1: 'opt2', 2: 'opt3'}",enabled,2,3
-2,free-form,testfree,,disabled,testanswer,3
+id,type,content,options,status,answer,times_answered,times_shown,user_id
+5cd3650c-e3aa-11ed-9c21-1062e5eae566,quiz,What is the capital of Italy?,"['Milan', 'Rome']",enabled,1,0,0,3ef7eb53-e3aa-11ed-a1ac-1062e5eae566
+2dd9bd1c-e3ab-11ed-8c6e-1062e5eae566,quiz,test quiz 2,"['quiz 1', 'quiz 2']",enabled,1,0,0,3ef7eb53-e3aa-11ed-a1ac-1062e5eae566
