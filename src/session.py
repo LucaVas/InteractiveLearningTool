@@ -4,7 +4,7 @@ from question import Question
 from entry import Entry
 import sys
 import csv
-from typing import Optional
+from typing import Any
 
 class Session:
 
@@ -107,27 +107,6 @@ class Session:
             
     @staticmethod
     def show_statistics(us_id: str) -> None:
-        stats: dict[str, dict[str, int]] = {}
-
-        # id,is_answered,question_id
-        with open("../files/statistics.csv") as file:
-            reader = csv.DictReader(file)
-            for line in reader:
-                if line["question_id"] in stats:
-                    if line["is_answered"] is True:
-                        stats[line["question_id"]]["answers"] += 1
-                    else:
-                        stats[line["question_id"]]["answers"] += 1
-                    stats[line["question_id"]]["shown"] += 1
-                    
-                else:
-                    if line["is_answered"] is True:
-                        stats[line["question_id"]] = {"answers" : 1, "shown" : 1}
-                    else:
-                        stats[line["question_id"]] = {"answers" : 0, "shown" : 1}
-        
-
-
         # id,type,content,options,status,user_id
         with open("../files/questions.csv") as file:
             reader = csv.DictReader(file)
@@ -139,16 +118,15 @@ class Session:
                         print(f"Question status: {line['status']}")
                         print(f"Content: {line['content']}")
                         if line["options"]:
-                            print(f"Options: {line['options']}")
-                        if stats.get(line['id']) is not None:
-                            print(f"Times answered: {stats.get(line['id'])['answers']}")
-                            print(f"Times shown: {stats.get(line['id'])['shown']}")
-                        else:
-                            print(f"Times answered: 0")
-                            print(f"Times shown: 0")
+                            print(f"Options:")
+                            for idx,opt in enumerate(eval(line['options'])):
+                                print(f"    {idx+1} - {opt}")
+                        print(f"Times answered: {line['times_answered']}")
+                        print(f"Times shown: {line['times_shown']}")
                         print("----------")
 
-    def check_answer(self, question_id: str, answer: str) -> bool | Entry:
+
+    def check_answer(self, question_id: str, answer: int | str) -> Any:
         with open("../files/questions.csv", "r") as file:
             reader = csv.DictReader(file)
             for question in reader:
@@ -159,7 +137,7 @@ class Session:
                         return Entry(False, question['id'])
                 else:
                     continue
-        return True
+        return None
 
     def practice_mode(self) -> None:
         
@@ -172,17 +150,26 @@ class Session:
                     print(f"ID: {question['id']}")
                     print(f"Question type: {question['type']}")
                     print(f"Question: {question['content']}")
-                    if question["type"] == "quiz":
-                        print(f"{question['options']}")
+                    if question['type'] == "free-form":
+                        answer = input("What is the answer? ")
+                    else:
+                        print("Options:")
+                        for idx,opt in enumerate(eval(question['options'])):
+                            print(f"    {idx + 1} - {opt}")
 
-                    answer = input("What is the answer? ")
+                        try:
+                            answer = int(input("What is the answer? "))
+                        except:
+                            print("Not a valid option.")
+                            continue
 
                     entry = self.check_answer(question['id'], answer)
                     if entry.is_answered is True:
                         print("Correct answer!")
-                    else:
+                    elif entry.is_answered is False:
                         print(f"Incorrect! The correct answer is: {question['answer']}")
-                    entry.save_entry()
+
+                    entry.save_entry(question["id"], entry.is_answered)
 
 
         
