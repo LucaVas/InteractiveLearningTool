@@ -85,7 +85,7 @@ class Question:
                 answer = input("Enter the option number: ")
 
                 try:
-                    answer = int(answer) - 1
+                    answer = int(answer)
                 except TypeError:
                     print("Not a valid option.")
                     continue

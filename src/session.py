@@ -1,11 +1,10 @@
 # Session class responsible for welcoming and goodbying
 import pyfiglet # type: ignore
 from question import Question
-from entry import Entry
 import sys
-import csv
-from typing import Any
 import json
+import random
+import csv
 
 class Session:
 
@@ -19,6 +18,7 @@ class Session:
     }
 
     json_file = "../app.json"
+    results_file = "../results.txt"
 
     def __init__(self, mode=None) -> None:
         self.mode = mode
@@ -141,57 +141,137 @@ class Session:
                     for user in question["timesShown"]:
                         print(f"Times shown: {user[us_id]}")
 
-    def check_answer(self, question_id: str, answer: int | str) -> Any:
-        with open("../files/questions.csv", "r") as file:
-            reader = csv.DictReader(file)
-            for question in reader:
-                if question['id'] == question_id:
-                    if question['answer'] == answer:
-                        return Entry(True, question['id'])
-                    else:
-                        return Entry(False, question['id'])
+    def practice_mode(self, user_id: str) -> None:
+        
+        print()
+        print("--> Practice mode: <--")
+        print()
+
+        with open(self.json_file, "r+") as file:
+            file_data = json.load(file)
+        
+            for question in file_data["questions"]:
+                print(f"ID: {question['questionId']}")
+                print(f"Question: {question['questionContent']}")
+
+                if question["questionType"] == "quiz":
+                    print("Options: ")
+                    for idx,opt in enumerate(question["questionOptions"]):
+                        print(f"    {idx+1} - {opt}")
+
+                answer = input("What is the answer? ")
+                if answer == question["questionAnswer"]:
+                    print("Correct answer")
+                    question["timesAnswered"][0][user_id] += 1
+                    print("----------")
                 else:
+                    print(f"Incorrect. The correct answer is: {question['questionAnswer']}")
+                    print("----------")
+                
+                question["timesShown"][0][user_id] += 1
+
+            # Sets file's current position at offset.
+            file.seek(0)
+            # convert back to json.
+            json.dump(file_data, file, indent = 4)
+
+    def test_mode(self, user_id: str) -> None:
+        """
+            function which starts test mode and saves results in results.txt
+        """
+                
+        print()
+        print("--> Test mode: <--")
+        print()
+
+        test_in_progress = True
+        answers = 0.0
+        # Ask user how many question they want to play
+        with open(self.json_file, "r+") as file:
+            file_data = json.load(file)
+            num_of_available_questions = len(file_data["questions"])
+
+            while test_in_progress:
+                num_of_questions = input(f"How many questions would you like to play with? Available: {num_of_available_questions} ")
+                if not num_of_questions:
+                    print("Cannot be blank")
                     continue
-        return None
 
-    def practice_mode(self) -> None:
-        
-        practice_in_progress = True
+                try:
+                    int(num_of_questions)
+                except TypeError:
+                    print("Not a valid option")
+                    continue
+                
+                if int(num_of_questions) > num_of_available_questions:
+                    print("Not enough questions")
+                    continue
+                
+                random_idx: list[int] = []
+                while len(random_idx) != int(num_of_questions):
 
-        with open("../files/questions.csv", "r") as file:
-            reader = csv.DictReader(file)
-            while practice_in_progress:
-                for question in reader:
-                    print(f"ID: {question['id']}")
-                    print(f"Question type: {question['type']}")
-                    print(f"Question: {question['content']}")
-
-                    
-
-                    if question["type"].strip() == "quiz":
-                        print("Options:")
-                        for idx,opt in enumerate(eval(question['options'])):
-                            print(f"    {idx + 1} - {opt}")
-
-                        answer = input("What is the answer? ")
-
-                        if not answer.isnumeric():
-                            print("Not a valid option.")
-                            continue
-
-                        entry = self.check_answer(question['id'], str(int(answer)-1))
+                    idx = random.randrange(0, int(num_of_questions))
+                    if idx in random_idx:
+                        continue
                     else:
-                        answer = input("What is the answer? ")
-                        entry = self.check_answer(question['id'], answer)
+                        random_idx.append(idx)
+                
+                for idx in random_idx:
+                    question = file_data["questions"][idx]
+                    print(f"ID: {question['questionId']}")
+                    print(f"Question: {question['questionContent']}")
 
-                    if entry.is_answered is True:
-                        print("Correct answer!")
-                    elif entry.is_answered is False:
-                        print(f"Incorrect! The correct answer is: {question['answer']}")
+                    answer: int | str
 
-                    entry.save_entry(question["id"], entry.is_answered)
+                    if question["questionType"] == "quiz":
+                        print("Options: ")
+                        for idx,opt in enumerate(question["questionOptions"]):
+                            print(f"    {idx+1} - {opt}")
+
+                        answer = int(input("What is the answer? "))
+                    else:
+                        answer = input(("What is the answer? "))
+
+                    if answer == question["questionAnswer"]:
+                        print("Correct answer")
+                        question["timesAnswered"][0][user_id] += 1
+                        answers += 1
+                        print("----------")
+                    else:
+                        print(f"Incorrect. The correct answer is: {question['questionAnswer']}")
+                        print("----------")
+                    
+                    question["timesShown"][0][user_id] += 1
+                
+                test_in_progress = False
 
 
-        
+            # Sets file's current position at offset.
+            file.seek(0)
+            # convert back to json.
+            json.dump(file_data, file, indent = 4)
 
+            score = (answers / int(num_of_questions)) * 100
+
+            results_output = [
+                f"Questions shown: {num_of_questions}",
+                f"Questions answered correctly: {int(answers)}",
+                f"You scored: {score:.2f} %\n"
+            ]
+
+            results_to_file = [
+                f"User ID: {user_id}",
+                f"Questions shown: {num_of_questions}",
+                f"Questions answered correctly: {int(answers)}",
+                f"Score: {score:.2f} %",
+                "\n"
+            ]
+
+            with open(self.results_file, "a") as file:
+                file.write("\n".join(results_to_file))
+
+
+            print()
+            print("Results: ")
+            print("\n".join(results_output))
 

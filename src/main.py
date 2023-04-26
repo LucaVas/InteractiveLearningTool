@@ -56,10 +56,10 @@ def main():
                 continue
         elif mode == "practice":
             # Practice mode
-            session.practice_mode()
+            session.practice_mode(user.id)
         elif mode == "test":
             # Test mode
-            pass
+            session.test_mode(user.id)
         else:
             print("Mode not available.")
 

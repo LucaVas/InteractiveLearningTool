@@ -1,9 +1,0 @@
-id,type,content,options,status,answer,times_answered,times_shown,user_id
-478554ec-e40b-11ed-88cd-1062e5eae566,quiz,What is the capital of Italy?,"['Milan', 'Rome', 'Naples']",enabled,1,2,2,2464505f-e40b-11ed-9b0d-1062e5eae566
-8ef5e03e-e40b-11ed-92af-1062e5eae566,free-form,What is this app author's name?,,enabled,Luca,2,2,7c3bac4a-e40b-11ed-bbe5-1062e5eae566
-15da661d-e417-11ed-b533-1062e5eae566,quiz,Which of the following data structures is immutable?,"['string', 'list', 'dictionary', 'all of the above', 'none of the above']",enabled,0,1,1,2464505f-e40b-11ed-9b0d-1062e5eae566
-8baa9985-e417-11ed-a3cf-1062e5eae566,quiz,How many sprints there are in a module at TC?,"['3', '4', '5']",enabled,2,1,1,2464505f-e40b-11ed-9b0d-1062e5eae566
-d6c2f9d0-e417-11ed-a05b-1062e5eae566,free-form,What is the capital of Lithuania?,,enabled,Vilnius,1,1,2464505f-e40b-11ed-9b0d-1062e5eae566
-e46fcc65-e417-11ed-9458-1062e5eae566,quiz,How many parts there are in a sprint at TC?,"['9', '1', '5']",enabled,2,1,1,2464505f-e40b-11ed-9b0d-1062e5eae566
-0e4f4eed-e418-11ed-a0f6-1062e5eae566,quiz,How many students are attending currently the WD_03 course at TC (April 2023)?,"['7', '12', '10']",enabled,2,0,1,2464505f-e40b-11ed-9b0d-1062e5eae566
-6de36e97-e418-11ed-90ad-1062e5eae566,quiz,How many pets does Luca have?,"['0', '1', '3']",enabled,1,0,1,2464505f-e40b-11ed-9b0d-1062e5eae566
