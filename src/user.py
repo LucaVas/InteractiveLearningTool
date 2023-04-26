@@ -1,101 +1,98 @@
 import csv
 import uuid
+import json
 
 # User class is responsible for creating, updating and deleting new users
 class User:
-    def __init__(self, username=None, user_id=0, is_user=False) -> None:
-        self._username = username
-        self._user_id = user_id
-        self._is_user = is_user
-
-    """
-        Seetters and getters
-    """
-    @property
-    def username(self) -> str:
-        return self._username
-
-    # setter to change username
-    @username.setter
-    def username(self, name: str) -> None:
-        # check input
-        if not name:
-            raise ValueError("Username invalid!")
-        self._username = name
+    def __init__(self, username=None, is_user=False) -> None:
+        self.username = username
+        self.id = str(uuid.uuid1())
+        self.is_user = is_user
+        self.json_file = "../app.json"
     
-    @property
-    def id(self) -> int:
-        return self._user_id
     
-    @id.setter
-    def id(self, number: int) -> None:
-        self._user_id = number
+    def register_user(self) -> None:
+        """
+            Function which registers a new user
+        """
+        registration_in_progress = True
+        while registration_in_progress:
+            username = input("Enter a new username: ")
+            if not username.strip():
+                print("Username cannot be blank.")
+                continue
+            else:
+                self.username = username
+                break
 
-    """
-        Registration of new user
-    """        
-
-    def register_user(self):
-        self.username = input("Enter a new username: ")
-        self.id = self.create_new_id()
         self.save_new_user()
-        print("Registration succesful!")
-        self.welcome_new_user()    
+        self.welcome_user(False)    
         
-    def welcome_new_user(self) -> None:
-        print(f"Welcome, {self.username}!")
-    
-    def create_new_id(self) -> uuid.UUID:
-        return uuid.uuid1()
+    def save_new_user(self) -> None:
+        """
+            Function which saves a new user to the json file
+        """
 
-    def save_new_user(self):
-        with open("../files/users.csv", "a", newline='') as file:
-            fieldnames = ['user_id', 'username']
-            writer = csv.DictWriter(file, fieldnames=fieldnames)
-            writer.writerow({'user_id': self.id, 'username': self.username})
+        user_entry = {
+            "userId": self.id,
+            "userName": self.username,
+        }
+        
+        with open(self.json_file,'r+') as file:
+          # First we load existing data into a dict.
+            file_data = json.load(file)
+            # Join new_data with file_data inside emp_details
+            file_data["users"].append(user_entry)
+            # Sets file's current position at offset.
+            file.seek(0)
+            # convert back to json.
+            json.dump(file_data, file, indent = 4)
 
     """
         Login of existing user
     """
 
-    def login(self):
+    def login(self) -> None:
+        """
+            Function which set current user to existing user, if found
+        """
         while True:
             name = input("Enter your username: ").strip().lower()
             if self.find_user(name) is False:
                 print("User not found")
                 continue
             else:
+                user_dict = self.find_user(name)
                 self._is_user = True
                 self.username = name
-                self.id = self.get_user_id()
-                self.welcome_current_user()
+                self.id = user_dict.get("userId")
+                print(self.welcome_user(True))
                 break
 
 
-    def welcome_current_user(self) -> None:
-        print(f"Welcome back, {self.username}.")
-
-
-    def find_user(self, name) -> bool:
-        # check if user exists
-        with open("../files/users.csv", 'r') as file:
-            reader = csv.DictReader(file)
-            for line in reader:
-                if line["username"] == name:
-                    return True
+    def find_user(self, name) -> dict[str, str] | bool:
+        """
+            Function that checks if user with same username is already registered
+        """
+        with open(self.json_file,'r') as file:
+          # First we load existing data into a dict.
+            file_data = json.load(file)
+            # Join new_data with file_data inside emp_details
+            for user in file_data["users"]:
+                if user.get("userName") == name:
+                    return user
                 else:
                     continue
-            return False
-
-
-    def get_user_id(self) -> str | None:
-        with open("../files/users.csv", "r") as file:
-            reader = csv.DictReader(file)
-            for line in reader:
-                if line["username"] == self.username:
-                    return line["user_id"]   
                 
-        return None
+            return False
+        
+    def welcome_user(self, is_new_user: bool) -> str:
+        """
+            Function which welcome user; if new, confirms registration; if existing, welcomes back
+        """
 
-
+        if is_new_user is True:
+            return f"Welcome back, {self.username}!"
+        else:
+            return f"Registration succesfull. Welcome, {self.username}!"
 

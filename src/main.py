@@ -24,16 +24,20 @@ def main():
     print()
     # Initialize new user
     user = User()
+    
     # New user?
-    res = input("Are you a new user? (Y/N) ").strip().lower()
-    if res == "y":
-        user.register_user()
-    elif res == "n":
-        user.login()
-    else:
-        print("Let's register you anyway...")
-        user.register_user()
-
+    while True:
+        res = input("Are you a new user? (Y/N) ").strip().lower()
+        if res == "y":
+            user.register_user()
+            break
+        elif res == "n":
+            user.login()
+            break
+        else:
+            print("Not a valid option")
+            continue
+    
     # modes available
     choosing_mode = True
     while choosing_mode:
@@ -72,9 +76,6 @@ def main():
     # TEST MODE
     # PROFILE SELECT
 
-
-def welcome_user():
-    ...
 
 if __name__ == "__main__":
     main()

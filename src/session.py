@@ -5,6 +5,7 @@ from entry import Entry
 import sys
 import csv
 from typing import Any
+import json
 
 class Session:
 
@@ -16,6 +17,8 @@ class Session:
         3 : "practice",
         4 : "test"
     }
+
+    json_file = "../app.json"
 
     def __init__(self, mode=None) -> None:
         self.mode = mode
@@ -66,8 +69,7 @@ class Session:
             question = Question()
             
             # clear out the question
-            question.clear_answer()
-            question.clear_options()
+            question.clear_question()
 
             question.show_types()
             question.select_question_type()
@@ -79,14 +81,16 @@ class Session:
             question.recap_question()
 
             # save question
-            question.save_question(user_id)
-            
+            if (input("Do you want to save this question (Y/N)? ").strip().lower()) == "y":
+                question.save_question(user_id)
+                print("Question saved succesfully")
+            else:
+                print("Question not saved.")           
             
 
             if (input("Do you want to add another question (Y/N)? ").strip().lower()) == "y":
                 continue
             else:
-                adding_question = False
                 return False
             
         return None
@@ -101,11 +105,11 @@ class Session:
             prompt = input("Do you want to enable or disable a question (E/D)? ").strip().lower()
             
             if prompt == "e":
-                id = Question.get_question_by_id()
+                id = Question.get_question_id()
                 Question.enable(id)
                 break
             elif prompt == "d":
-                id = Question.get_question_by_id()
+                id = Question.get_question_id()
                 Question.disable(id)  
                 break      
             else:
@@ -115,24 +119,27 @@ class Session:
             
     @staticmethod
     def show_statistics(us_id: str) -> None:
-        # id,type,content,options,status,user_id
-        with open("../files/questions.csv", "r") as file:
-            reader = csv.DictReader(file)
-            for line in reader:
-                if line["user_id"] == str(us_id):
-                        print("----------")
-                        print(f"Question id: {line['id']}")
-                        print(f"Type of question: {line['type']}")
-                        print(f"Question status: {line['status']}")
-                        print(f"Content: {line['content']}")
-                        if line["options"]:
-                            print(f"Options:")
-                            for idx,opt in enumerate(eval(line['options'])):
-                                print(f"    {idx+1} - {opt}")
-                        print(f"Times answered: {line['times_answered']}")
-                        print(f"Times shown: {line['times_shown']}")
-                        print("----------")
+        
+        with open(Session.json_file, "r") as file:
+            # First we load existing data into a dict.
+            file_data = json.load(file)
 
+        for user in file_data["users"]:
+            if user.get("userId") == us_id:
+                for question in file_data["questions"]:
+                    print("----------")
+                    print(f"Question id: {question['questionId']}")
+                    print(f"Type of question: {question['questionType']}")
+                    print(f"Question status: {question['questionStatus']}")
+                    print(f"Content: {question['questionContent']}")
+                    if len(question["questionOptions"]) != 0:
+                        print("Options: ")
+                        for idx,opt in enumerate(question["questionOptions"]):
+                            print(f" {idx+1} - {opt}")
+                    for user in question["timesAnswered"]:
+                        print(f"Times answered: {user[us_id]}")
+                    for user in question["timesShown"]:
+                        print(f"Times shown: {user[us_id]}")
 
     def check_answer(self, question_id: str, answer: int | str) -> Any:
         with open("../files/questions.csv", "r") as file:

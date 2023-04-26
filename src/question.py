@@ -1,6 +1,7 @@
 import csv
 import pandas as pd
 import uuid
+import json
     
 class Question:
 
@@ -9,84 +10,24 @@ class Question:
         1: "free-form"
     }
 
+    json_file = "../app.json"
+
     def __init__(self, type=None, content=None, options=[]) -> None:
-        self._type = type
-        self._content = content
-        self._options = options
-        self._number_of_options = 0
-        self._answer = None
-        self._status = "enabled"
-        self._id = None
+        self.type = type
+        self.content = content
+        self.options = options
+        self.number_of_options = 0
+        self.answer = None
+        self.status = "enabled"
+        self.id = str(uuid.uuid1())
 
-    """
-        Setters and getters
-    """
-    @property
-    def content(self):
-        return self._content
-                
-    @content.setter
-    def content(self, cont):
-        self._content = cont
-                
-    @property
-    def type(self):
-        return self._type
-                    
-    @type.setter
-    def type(self, t):
-        self._type = t
 
-    @property
-    def options(self):
-        return self._options
-    
-    @options.setter
-    def options(self, lst):
-        self._options = lst
-
-    def clear_options(self) -> None:
+    def clear_question(self) -> None:
         """
-            function that clears the options once the quiz question is saved
+            function that clears the options and answer
         """
         self.options = []
-
-    @property
-    def number_of_options(self):
-        return self._number_of_options
-    
-    @number_of_options.setter
-    def number_of_options(self, num):
-        if 1 < num < 6:
-            self._number_of_options = num
-
-    @property
-    def status(self):
-        return self._status
-    
-    @status.setter
-    def status(self, status: str):
-        self._status = status
-
-    @property
-    def id(self):
-        return self._id
-    
-    @id.setter
-    def id(self, n):
-        self._id = n
-
-    @property
-    def answer(self):
-        return self._answer
-    
-    @answer.setter
-    def answer(self, a) -> None:
-        self._answer = a
-    
-
-    def set_id(self) -> None:
-        self.id = uuid.uuid1()
+        self.answer = None
 
 
     def select_question_type(self):
@@ -136,12 +77,6 @@ class Question:
         else:
             self.content = input("Enter your free-form question content: ").strip()
 
-    def clear_answer(self) -> None:
-        """
-            function that clears out the answer for a new question
-        """
-        self.answer = None
-
     def add_answer(self):
         print("What is the correct answer to this question? ", end=" ")
 
@@ -187,64 +122,92 @@ class Question:
 
 
     def save_question(self, user_id):  
+        """
+            Function which saves question to json
+        """
+        question_entry = {
+            "questionId": self.id,
+            "questionStatus": self.status,
+            "questionType": self.type,
+            "questionContent": self.content,
+            "questionOptions": self.options,
+            "questionAnswer": self.answer,
+            "timesAnswered": [
+                {user_id: 0}
+            ],
+            "timesShown": [
+                {user_id: 0}
+            ]
+        }
         
-        choice = input("Would you like to save this question (Y/N)? ").lower().strip()
-        if choice == "y":
-            self.set_id()
-            with open("../files/questions.csv", "a", newline='') as file:
-                fieldnames = ["id", "type", "content", "options", "status", "answer", "times_answered" ,"times_shown", "user_id"]
-                writer = csv.DictWriter(file, fieldnames=fieldnames)
-                if self.type == "free-form":
-                    writer.writerow({'id': self.id, "type": self.type, "content": self.content, "options": "", "status": self.status, "answer": self.answer, "times_answered": 0,"times_shown": 0, "user_id": user_id})
-                else:
-                    writer.writerow({'id': self.id, "type": self.type, "content": self.content, "options": self.options, "status": self.status, "answer": self.answer, "times_answered": 0,"times_shown": 0, "user_id": user_id})
-
-            print("Question saved succesfully!")
-            
-        else:
-            print("Question not saved.")
-
+        with open(self.json_file,'r+') as file:
+          # First we load existing data into a dict.
+            file_data = json.load(file)
+            # Join new_data with file_data inside emp_details
+            file_data["questions"].append(question_entry)
+            # Sets file's current position at offset.
+            file.seek(0)
+            # convert back to json.
+            json.dump(file_data, file, indent = 4)
+        
 
     @staticmethod
-    def get_question_by_id():
+    def get_question_id():
         while True:
             id = input("Enter the ID of the question: ").strip()
-            try:
-                int(id)
-            except TypeError:
-                print("Not a valid question")
+            if not id:
+                print("Id cannot be blank")
                 continue
             
-            with open("../files/questions.csv", "r") as file:
-                reader = csv.DictReader(file)
-                for row in reader:
-                    if row["id"] == id:
+            with open(Question.json_file, "r") as file:
+                # First we load existing data into a dict.
+                file_data = json.load(file)
+                # Join new_data with file_data inside emp_details
+                for question in file_data["questions"]:
+                    if question.get("questionId") == id:
                         return id
                     else:
                         continue
-            print("Question not found!")
+            
+            print("Question not found")
             continue
-                    
+         
 
     @staticmethod
-    def disable(id):
+    def disable(id) -> None:
+        """
+            Function which disables a question by id
+        """
+        with open(Question.json_file, "r+") as file:
+            file_data = json.load(file)
+            for question in file_data["questions"]:
+                if question.get("questionId") == id:
+                    question["questionStatus"] = "disabled"
+            # Sets file's current position at offset.
+            file.seek(0)
+            # convert back to json.
+            json.dump(file_data, file, indent = 4)
+            file.truncate()
         
-        file = pd.read_csv("../files/questions.csv")
-        file.head(3)
-        file.at[int(id), "status"]="disabled"
-        file.to_csv("../files/questions.csv", index=False)
         print(f"Question with id: {id} is now disabled.")   
-        return False
 
     @staticmethod
-    def enable(id):
-
-        file = pd.read_csv("../files/questions.csv")
-        file.head(3)
-        file.at[int(id), "status"]="enabled"
-        file.to_csv("../files/questions.csv", index=False)
-        print(f"Question with id: {id} is now enabled.")      
-        return False      
+    def enable(id) -> None:
+        """
+            function which enables a question by id
+        """
+        with open(Question.json_file, "r+") as file:
+            file_data = json.load(file)
+            for question in file_data["questions"]:
+                if question.get("questionId") == id:
+                    question["questionStatus"] = "enabled"
+            # Sets file's current position at offset.
+            file.seek(0)
+            # convert back to json.
+            json.dump(file_data, file, indent = 4)
+            file.truncate()
+        
+        print(f"Question with id: {id} is now enabled.")       
     
     @classmethod
     def show_types(cls):
