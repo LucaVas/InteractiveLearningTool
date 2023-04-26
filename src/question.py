@@ -45,6 +45,12 @@ class Question:
     def options(self, lst):
         self._options = lst
 
+    def clear_options(self) -> None:
+        """
+            function that clears the options once the quiz question is saved
+        """
+        self.options = []
+
     @property
     def number_of_options(self):
         return self._number_of_options
@@ -99,7 +105,6 @@ class Question:
                     print("Not a valid choice.")
                     continue
 
-
     def add_content(self):
               
         if self.type == "quiz":
@@ -131,6 +136,11 @@ class Question:
         else:
             self.content = input("Enter your free-form question content: ").strip()
 
+    def clear_answer(self) -> None:
+        """
+            function that clears out the answer for a new question
+        """
+        self.answer = None
 
     def add_answer(self):
         print("What is the correct answer to this question? ", end=" ")
@@ -171,11 +181,13 @@ class Question:
             print(f"    Options:")
             for idx,opt in enumerate(self.options):
                 print(f"        {idx+1} - {opt}")
-        print(f"    Answer: {self.answer + 1}")
+            print(f"    Answer: {self.answer + 1}")
+        else:
+            print(f"    Answer: {self.answer}")
 
 
     def save_question(self, user_id):  
-
+        
         choice = input("Would you like to save this question (Y/N)? ").lower().strip()
         if choice == "y":
             self.set_id()
@@ -188,8 +200,10 @@ class Question:
                     writer.writerow({'id': self.id, "type": self.type, "content": self.content, "options": self.options, "status": self.status, "answer": self.answer, "times_answered": 0,"times_shown": 0, "user_id": user_id})
 
             print("Question saved succesfully!")
+            
         else:
             print("Question not saved.")
+
 
     @staticmethod
     def get_question_by_id():

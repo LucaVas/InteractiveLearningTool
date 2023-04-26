@@ -64,8 +64,14 @@ class Session:
         adding_question = True
         while adding_question is True:
             question = Question()
+            
+            # clear out the question
+            question.clear_answer()
+            question.clear_options()
+
             question.show_types()
             question.select_question_type()
+
             question.add_content()
             question.add_answer()
 
@@ -74,6 +80,8 @@ class Session:
 
             # save question
             question.save_question(user_id)
+            
+            
 
             if (input("Do you want to add another question (Y/N)? ").strip().lower()) == "y":
                 continue
@@ -108,7 +116,7 @@ class Session:
     @staticmethod
     def show_statistics(us_id: str) -> None:
         # id,type,content,options,status,user_id
-        with open("../files/questions.csv") as file:
+        with open("../files/questions.csv", "r") as file:
             reader = csv.DictReader(file)
             for line in reader:
                 if line["user_id"] == str(us_id):
@@ -150,20 +158,25 @@ class Session:
                     print(f"ID: {question['id']}")
                     print(f"Question type: {question['type']}")
                     print(f"Question: {question['content']}")
-                    if question['type'] == "free-form":
-                        answer = input("What is the answer? ")
-                    else:
+
+                    
+
+                    if question["type"].strip() == "quiz":
                         print("Options:")
                         for idx,opt in enumerate(eval(question['options'])):
                             print(f"    {idx + 1} - {opt}")
 
-                        try:
-                            answer = int(input("What is the answer? "))
-                        except:
+                        answer = input("What is the answer? ")
+
+                        if not answer.isnumeric():
                             print("Not a valid option.")
                             continue
 
-                    entry = self.check_answer(question['id'], answer)
+                        entry = self.check_answer(question['id'], str(int(answer)-1))
+                    else:
+                        answer = input("What is the answer? ")
+                        entry = self.check_answer(question['id'], answer)
+
                     if entry.is_answered is True:
                         print("Correct answer!")
                     elif entry.is_answered is False:

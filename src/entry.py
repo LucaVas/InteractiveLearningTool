@@ -31,17 +31,36 @@ class Entry():
     def question_id(self, s: str) -> None:
         self._question_id = s
 
-    def generate_id(self):
-        with open("../files/statistics.csv", "r") as file:
-            lines = file.readlines()
-            if lines[-1][0].isnumeric():
-                self.id = int(lines[-1][0]) + 1
-            else:
-                self.id = 0
+    def get_shown_and_answered_values(self, question_id: str) -> tuple[int, int, int]:
+        """
+            function which returns int values of how many times the question was answered and shown        
+        """
+        times_answered_val = 0
+        times_shown_val = 0
+        row_num = 0
+        
+        # get times_answered and times_shown values
+        with open("../files/questions.csv") as file:
+            reader = csv.DictReader(file)
+            for idx, row in enumerate(reader):
+                if row["id"] == question_id:
+                    times_answered_val = int(row["times_answered"])
+                    times_shown_val = int(row["times_shown"])
+                    row_num = idx
+        
+        return times_answered_val, times_shown_val, row_num
 
     def save_entry(self, question_id: str, is_answered: bool):
+        """
+            function which saves result of answer in questions.csv. 
+            'times_shown' is increased by 1 every time the question is shown
+            if the question is answered correctly, add 1 to 'times_answered' value for that question
+        """
+        times_answered, times_shown, row_num = self.get_shown_and_answered_values(question_id)
+
         file = pd.read_csv("../files/questions.csv")
         if is_answered is True:
-            file.at[question_id, int("times_answered")] += 1
-        file.at[question_id, int("times_shown")] += 1
+            # [row number, column name]
+            file.at[row_num, "times_answered"] = times_answered + 1
+        file.at[row_num, "times_shown"] = times_shown + 1
         file.to_csv("../files/questions.csv", index=False)
