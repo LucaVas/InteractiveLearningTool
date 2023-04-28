@@ -7,6 +7,10 @@
         {
             "userId": "f1dc7819-e453-11ed-a148-1062e5eae566",
             "userName": "judita"
+        },
+        {
+            "userId": "c0d19116-e583-11ed-aa87-1062e5eae566",
+            "userName": "max"
         }
     ],
     "questions": [
@@ -20,13 +24,15 @@
             "timesAnswered": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 4,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 2
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 2,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 4,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ]
         },
@@ -44,13 +50,15 @@
             "timesAnswered": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 3,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 1
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 1,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 3,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ]
         },
@@ -64,13 +72,15 @@
             "timesAnswered": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 3,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 3,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ]
         },
@@ -84,13 +94,15 @@
             "timesAnswered": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 2,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 2,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ]
         },
@@ -103,12 +115,14 @@
             "questionAnswer": "test test",
             "timesAnswered": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ]
         },
@@ -125,13 +139,15 @@
             "timesAnswered": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 0
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 0
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ]
         }

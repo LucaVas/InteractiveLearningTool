@@ -25,7 +25,8 @@ class User:
                 self.username = username
                 break
 
-        self.save_new_user()
+        self.save_new_user()        
+        self.add_user_to_questions()
         self.welcome_user(False)    
         
     def save_new_user(self) -> None:
@@ -48,9 +49,14 @@ class User:
             # convert back to json.
             json.dump(file_data, file, indent = 4)
 
-    """
-        Login of existing user
-    """
+    def add_user_to_questions(self) -> None:
+        with open(self.json_file,'r+') as file:
+            file_data = json.load(file)
+            for question in file_data["questions"]:
+                question["timesAnswered"][0].update({self.id: 0})
+                question["timesShown"][0].update({self.id: 0})
+            file.seek(0)
+            json.dump(file_data, file, indent = 4)
 
     def login(self) -> None:
         """
@@ -68,7 +74,6 @@ class User:
                 self.id = user_dict.get("userId")
                 print(self.welcome_user(True))
                 break
-
 
     def find_user(self, name) -> dict[str, str] | bool:
         """
