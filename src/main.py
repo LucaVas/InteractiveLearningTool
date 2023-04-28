@@ -52,11 +52,10 @@ def main():
             session.show_statistics(user.id)
         elif mode == "disable/enable questions":
             # Enable/disable questions mode
-            if session.enable_disable_mode() is False:
-                continue
+            session.enable_disable_mode() is False
         elif mode == "practice":
             # Practice mode
-            session.practice_mode(user.id)
+            session.practice_mode(user.id) is False
         elif mode == "test":
             # Test mode
             session.test_mode(user.id)

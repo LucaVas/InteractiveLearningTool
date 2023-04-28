@@ -144,36 +144,45 @@ class Session:
     def practice_mode(self, user_id: str) -> None:
         
         print()
-        print("--> Practice mode: <--")
+        print("--> Practice mode started <--")
         print()
+
 
         with open(self.json_file, "r+") as file:
             file_data = json.load(file)
-        
-            for question in file_data["questions"]:
-                print(f"ID: {question['questionId']}")
-                print(f"Question: {question['questionContent']}")
 
-                if question["questionType"] == "quiz":
-                    print("Options: ")
-                    for idx,opt in enumerate(question["questionOptions"]):
-                        print(f"    {idx+1} - {opt}")
+            if len(file_data["questions"]) < 5:
+                print("You need to have at least 5 questions to enter practice mode.")
+            else:
+                for question in file_data["questions"]:
+                    print(f"ID: {question['questionId']}")
+                    print(f"Question: {question['questionContent']}")
 
-                answer = input("What is the answer? ")
-                if answer == question["questionAnswer"]:
-                    print("Correct answer")
-                    question["timesAnswered"][0][user_id] += 1
-                    print("----------")
-                else:
-                    print(f"Incorrect. The correct answer is: {question['questionAnswer']}")
-                    print("----------")
-                
-                question["timesShown"][0][user_id] += 1
+                    if question["questionType"] == "quiz":
+                        print("Options: ")
+                        for idx,opt in enumerate(question["questionOptions"]):
+                            print(f"    {idx+1} - {opt}")
 
-            # Sets file's current position at offset.
-            file.seek(0)
-            # convert back to json.
-            json.dump(file_data, file, indent = 4)
+                    answer = input("What is the answer? ")
+                    if answer == question["questionAnswer"]:
+                        print("Correct answer")
+                        question["timesAnswered"][0][user_id] += 1
+                        print("----------")
+                    else:
+                        print(f"Incorrect. The correct answer is: {question['questionAnswer']}")
+                        print("----------")
+                    
+                    question["timesShown"][0][user_id] += 1
+
+                # Sets file's current position at offset.
+                file.seek(0)
+                # convert back to json.
+                json.dump(file_data, file, indent = 4)
+
+
+        print()
+        print("--> Practice mode ended <--")
+        print()
 
     def test_mode(self, user_id: str) -> None:
         """
@@ -181,7 +190,7 @@ class Session:
         """
                 
         print()
-        print("--> Test mode: <--")
+        print("--> Test mode started <--")
         print()
 
         test_in_progress = True
@@ -191,66 +200,70 @@ class Session:
             file_data = json.load(file)
             num_of_available_questions = len(file_data["questions"])
 
-            while test_in_progress:
-                num_of_questions = input(f"How many questions would you like to play with? Available: {num_of_available_questions} ")
-                if not num_of_questions:
-                    print("Cannot be blank")
-                    continue
-
-                try:
-                    int(num_of_questions)
-                except TypeError:
-                    print("Not a valid option")
-                    continue
-                
-                if int(num_of_questions) > num_of_available_questions:
-                    print("Not enough questions")
-                    continue
-                
-                random_idx: list[int] = []
-                while len(random_idx) != int(num_of_questions):
-
-                    idx = random.randrange(0, int(num_of_questions))
-                    if idx in random_idx:
+            if num_of_available_questions < 5:
+                print("You need to have at least 5 questions to enter test mode.")
+            else:
+                while test_in_progress:
+                    num_of_questions = input(f"How many questions would you like to play with? Available: {num_of_available_questions} ")
+                    if not num_of_questions:
+                        print("Cannot be blank")
                         continue
-                    else:
-                        random_idx.append(idx)
-                
-                for idx in random_idx:
-                    question = file_data["questions"][idx]
-                    print(f"ID: {question['questionId']}")
-                    print(f"Question: {question['questionContent']}")
 
-                    answer: int | str
-
-                    if question["questionType"] == "quiz":
-                        print("Options: ")
-                        for idx,opt in enumerate(question["questionOptions"]):
-                            print(f"    {idx+1} - {opt}")
-
-                        answer = int(input("What is the answer? "))
-                    else:
-                        answer = input(("What is the answer? "))
-
-                    if answer == question["questionAnswer"]:
-                        print("Correct answer")
-                        question["timesAnswered"][0][user_id] += 1
-                        answers += 1
-                        print("----------")
-                    else:
-                        print(f"Incorrect. The correct answer is: {question['questionAnswer']}")
-                        print("----------")
+                    try:
+                        int(num_of_questions)
+                    except TypeError:
+                        print("Not a valid option")
+                        continue
                     
-                    question["timesShown"][0][user_id] += 1
-                
-                test_in_progress = False
+                    if int(num_of_questions) > num_of_available_questions:
+                        print("Not enough questions")
+                        continue
+                    
+                    random_idx: list[int] = []
+                    while len(random_idx) != int(num_of_questions):
+
+                        idx = random.randrange(0, int(num_of_questions))
+                        if idx in random_idx:
+                            continue
+                        else:
+                            random_idx.append(idx)
+                    
+                    for idx in random_idx:
+                        question = file_data["questions"][idx]
+                        print(f"ID: {question['questionId']}")
+                        print(f"Question: {question['questionContent']}")
+
+                        answer: int | str
+
+                        if question["questionType"] == "quiz":
+                            print("Options: ")
+                            for idx,opt in enumerate(question["questionOptions"]):
+                                print(f"    {idx+1} - {opt}")
+
+                            answer = int(input("What is the answer? "))
+                        else:
+                            answer = input(("What is the answer? "))
+
+                        if answer == question["questionAnswer"]:
+                            print("Correct answer")
+                            question["timesAnswered"][0][user_id] += 1
+                            answers += 1
+                            print("----------")
+                        else:
+                            print(f"Incorrect. The correct answer is: {question['questionAnswer']}")
+                            print("----------")
+                        
+                        question["timesShown"][0][user_id] += 1
+                    
+                    test_in_progress = False
 
 
-            # Sets file's current position at offset.
-            file.seek(0)
-            # convert back to json.
-            json.dump(file_data, file, indent = 4)
+                # Sets file's current position at offset.
+                file.seek(0)
+                # convert back to json.
+                json.dump(file_data, file, indent = 4)
 
+        if answers != 0.0: 
             score = (answers / int(num_of_questions)) * 100
 
             results_output = [
@@ -275,3 +288,6 @@ class Session:
             print("Results: ")
             print("\n".join(results_output))
 
+        print()
+        print("--> Test mode ended <--")
+        print()
