@@ -90,11 +90,11 @@ class Question:
                     print("Not a valid option.")
                     continue
 
-                if answer not in range(self.number_of_options):
+                if (answer-1) not in range(self.number_of_options):
                     print("Not one of the options available")
                     continue
 
-                self.answer = answer
+                self.answer = answer-1
                 break
         else:
             while True:
@@ -106,7 +106,6 @@ class Question:
 
                 self.answer = answer
                 break
-
 
     def recap_question(self):
         print("Question created!")
@@ -120,11 +119,11 @@ class Question:
         else:
             print(f"    Answer: {self.answer}")
 
-
     def save_question(self, user_id):  
         """
             Function which saves question to json
         """
+
         question_entry = {
             "questionId": self.id,
             "questionStatus": self.status,
@@ -133,16 +132,22 @@ class Question:
             "questionOptions": self.options,
             "questionAnswer": self.answer,
             "timesAnswered": [
-                {user_id: 0}
+                {}
             ],
             "timesShown": [
-                {user_id: 0}
+                {}
             ]
         }
-        
+
         with open(self.json_file,'r+') as file:
-          # First we load existing data into a dict.
+            
             file_data = json.load(file)
+
+            users = file_data["users"]
+            for user in users:
+                question_entry["timesAnswered"][0].update({user["userId"]: 0})
+                question_entry["timesShown"][0].update({user["userId"]: 0})
+    
             # Join new_data with file_data inside emp_details
             file_data["questions"].append(question_entry)
             # Sets file's current position at offset.

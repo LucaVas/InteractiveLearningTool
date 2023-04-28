@@ -95,53 +95,43 @@
             ]
         },
         {
-            "questionId": "b11cf0d4-e466-11ed-9c42-1062e5eae566",
+            "questionId": "3213f25f-e581-11ed-967c-1062e5eae566",
+            "questionStatus": "enabled",
+            "questionType": "free-form",
+            "questionContent": "test",
+            "questionOptions": [],
+            "questionAnswer": "test test",
+            "timesAnswered": [
+                {
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0
+                }
+            ],
+            "timesShown": [
+                {
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0
+                }
+            ]
+        },
+        {
+            "questionId": "aa8ceee3-e582-11ed-8c7b-1062e5eae566",
             "questionStatus": "enabled",
             "questionType": "quiz",
-            "questionContent": "What is the capital of Lithuania?",
+            "questionContent": "test quiz",
             "questionOptions": [
-                "Vilnius",
-                "Kaunas",
-                "Klaipeda",
-                "Panevezys"
+                "test 1",
+                "test 2"
             ],
             "questionAnswer": 1,
             "timesAnswered": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 1
-                }
-            ],
-            "timesShown": [
-                {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 2,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 1
-                }
-            ]
-        },
-        {
-            "questionId": "c89bb7bf-e466-11ed-bba7-1062e5eae566",
-            "questionStatus": "enabled",
-            "questionType": "quiz",
-            "questionContent": "How many pets does Luca have?",
-            "questionOptions": [
-                "0",
-                "1",
-                "2",
-                "3",
-                "4"
-            ],
-            "questionAnswer": 1,
-            "timesAnswered": [
-                {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 1,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 1,
-                    "f1dc7819-e453-11ed-a148-1062e5eae566": 1
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 0
                 }
             ]
         }
