@@ -49,4 +49,4 @@ Users can select a profile which they want to play with. Each profile has indivi
 
 **War Game project**
 
-Link to Sprint 3 - Part 4 "War Game" project: [WarCardGame](https://github.com/LucaVas/WarCardGame.git)
+Link to Sprint 3 - Part 4 "War Game" project repository:  [WarCardGame](https://github.com/LucaVas/WarCardGame.git)
