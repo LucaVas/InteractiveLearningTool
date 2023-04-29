@@ -46,7 +46,7 @@
                 "test quiz answer 2",
                 "test quiz answer 3"
             ],
-            "questionAnswer": 1,
+            "questionAnswer": "1",
             "timesAnswered": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 3,
@@ -135,7 +135,33 @@
                 "test 1",
                 "test 2"
             ],
-            "questionAnswer": 1,
+            "questionAnswer": "1",
+            "timesAnswered": [
+                {
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
+                }
+            ],
+            "timesShown": [
+                {
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0
+                }
+            ]
+        },
+        {
+            "questionId": "c8b3c69e-e676-11ed-b2d8-1062e5eae566",
+            "questionStatus": "disabled",
+            "questionType": "quiz",
+            "questionContent": "quiz question 1",
+            "questionOptions": [
+                "test 1",
+                "test 2",
+                "test 3"
+            ],
+            "questionAnswer": "2",
             "timesAnswered": [
                 {
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,

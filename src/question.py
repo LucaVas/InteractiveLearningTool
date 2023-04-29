@@ -94,7 +94,7 @@ class Question:
                     print("Not one of the options available")
                     continue
 
-                self.answer = answer-1
+                self.answer = str(answer-1)
                 break
         else:
             while True:
@@ -155,7 +155,6 @@ class Question:
             # convert back to json.
             json.dump(file_data, file, indent = 4)
         
-
     @staticmethod
     def get_question_id():
         while True:
@@ -177,7 +176,6 @@ class Question:
             print("Question not found")
             continue
          
-
     @staticmethod
     def disable(id) -> None:
         """

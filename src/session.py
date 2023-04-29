@@ -1,20 +1,20 @@
 # Session class responsible for welcoming and goodbying
 import pyfiglet # type: ignore
 from question import Question
+from user import User
 import sys
 import json
 import random
-import csv
 
 class Session:
 
     app_name = "InteLTool"
     modes = {
-        0 : "question",
-        1 : "statistics",
-        2 : "disable/enable questions",
-        3 : "practice",
-        4 : "test"
+        1 : "question",
+        2 : "statistics",
+        3 : "disable/enable questions",
+        4 : "practice",
+        5 : "test"
     }
 
     json_file = "../app.json"
@@ -34,10 +34,10 @@ class Session:
         print()
         print("Available modes:")
         for idx,mode in enumerate(cls.modes.values()):
-            print(f"{idx} - {mode.capitalize()} mode")
+            print(f"{idx+1} - {mode.capitalize()} mode")
 
     @classmethod
-    def choose_mode(cls):
+    def choose_mode(cls) -> str:
         while True:
             choice = input("Select one of the available options (number), or enter 'q' to exit: ").lower().strip()
 
@@ -46,20 +46,20 @@ class Session:
                 sys.exit("Thank you for using InteLTool. See ya!")
 
             try:
-                choice = int(choice)
+                int(choice)
             except ValueError:
                 print("Not a valid choice.")
                 continue
             
-            if choice in cls.modes.keys():
-                print(f"{cls.modes[choice].capitalize()} mode selected.")
-                return cls.modes[choice]
+            if int(choice) in cls.modes.keys():
+                print(f"{cls.modes[int(choice)].capitalize()} mode selected.")
+                return cls.modes[int(choice)]
             else:
                 print("Not a valid choice.")
                 continue
 
     @staticmethod
-    def question_mode(user_id: str) -> bool | None:
+    def question_mode(user: User) -> bool | None:
         print()
         print("--> Adding question mode: <--")
         print()
@@ -82,7 +82,7 @@ class Session:
 
             # save question
             if (input("Do you want to save this question (Y/N)? ").strip().lower()) == "y":
-                question.save_question(user_id)
+                question.save_question(user.id)
                 print("Question saved succesfully")
             else:
                 print("Question not saved.")           
@@ -118,14 +118,18 @@ class Session:
         return None
             
     @staticmethod
-    def show_statistics(us_id: str) -> None:
-        
+    def show_statistics(user: User) -> None:
+
+        print()
+        print("--> Statistics mode started <--")
+        print()
+
         with open(Session.json_file, "r") as file:
             # First we load existing data into a dict.
             file_data = json.load(file)
-
-        for user in file_data["users"]:
-            if user.get("userId") == us_id:
+        
+        for us in file_data["users"]:
+            if us.get("userId") == user.id:
                 for question in file_data["questions"]:
                     print("----------")
                     print(f"Question id: {question['questionId']}")
@@ -136,12 +140,16 @@ class Session:
                         print("Options: ")
                         for idx,opt in enumerate(question["questionOptions"]):
                             print(f" {idx+1} - {opt}")
-                    for user in question["timesAnswered"]:
-                        print(f"Times answered: {user[us_id]}")
-                    for user in question["timesShown"]:
-                        print(f"Times shown: {user[us_id]}")
+                    for us in question["timesAnswered"]:
+                        print(f"Times answered: {us[user.id]}")
+                    for us in question["timesShown"]:
+                        print(f"Times shown: {us[user.id]}")
 
-    def practice_mode(self, user_id: str) -> None:
+        print()
+        print("--> Statistics mode ended <--")
+        print()
+
+    def practice_mode(self, user: User) -> None:
         
         print()
         print("--> Practice mode started <--")
@@ -166,13 +174,13 @@ class Session:
                     answer = input("What is the answer? ")
                     if answer == question["questionAnswer"]:
                         print("Correct answer")
-                        question["timesAnswered"][0][user_id] += 1
+                        question["timesAnswered"][0][user.id] += 1
                         print("----------")
                     else:
                         print(f"Incorrect. The correct answer is: {question['questionAnswer']}")
                         print("----------")
                     
-                    question["timesShown"][0][user_id] += 1
+                    question["timesShown"][0][user.id] += 1
 
                 # Sets file's current position at offset.
                 file.seek(0)
@@ -184,7 +192,7 @@ class Session:
         print("--> Practice mode ended <--")
         print()
 
-    def test_mode(self, user_id: str) -> None:
+    def test_mode(self, user: User) -> None:
         """
             function which starts test mode and saves results in results.txt
         """
@@ -246,14 +254,14 @@ class Session:
 
                         if answer == question["questionAnswer"]:
                             print("Correct answer")
-                            question["timesAnswered"][0][user_id] += 1
+                            question["timesAnswered"][0][user.id] += 1
                             answers += 1
                             print("----------")
                         else:
                             print(f"Incorrect. The correct answer is: {question['questionAnswer']}")
                             print("----------")
                         
-                        question["timesShown"][0][user_id] += 1
+                        question["timesShown"][0][user.id] += 1
                     
                     test_in_progress = False
 
@@ -273,7 +281,7 @@ class Session:
             ]
 
             results_to_file = [
-                f"User ID: {user_id}",
+                f"User ID: {user.id}",
                 f"Questions shown: {num_of_questions}",
                 f"Questions answered correctly: {int(answers)}",
                 f"Score: {score:.2f} %",
