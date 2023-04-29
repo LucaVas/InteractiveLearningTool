@@ -44,3 +44,9 @@ In this mode, users can test their knowledge. Users first select the number of q
 **Profile Select mode**
 
 Users can select a profile which they want to play with. Each profile has individual statistics of how many times a question was answered correctly and individual probabilities of getting those questions in the practice mode. In the test mode, saved scores also say which profile achieved each of the scores there. **Important**: Questions are shared between all profiles.
+
+
+
+**War Game project**
+
+Link to Sprint 3 - Part 4 "War Game" project: [WarCardGame](https://github.com/LucaVas/WarCardGame.git)

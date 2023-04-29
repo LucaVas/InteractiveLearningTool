@@ -62,19 +62,9 @@ def main():
         else:
             print("Mode not available.")
 
-        
-    
-    # Prompt user for choice
-    # Validate input
-    
-    # TODO: USER CAN CHOOSE BETWEEN SEVERAL OPTIONS
-    # ADD QUESTIONS
-    # VIEW STATISTICS
-    # DISABLE/ENABLE QUESTIONS
-    # PRACTICE MODE
-    # TEST MODE
-    # PROFILE SELECT
 
 
 if __name__ == "__main__":
     main()
+
+
