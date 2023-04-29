@@ -169,7 +169,7 @@ class Question:
                 # Join new_data with file_data inside emp_details
                 for question in file_data["questions"]:
                     if question.get("questionId") == id:
-                        return id
+                        return question
                     else:
                         continue
             

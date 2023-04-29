@@ -103,19 +103,36 @@ class Session:
 
         while True:
             prompt = input("Do you want to enable or disable a question (E/D)? ").strip().lower()
-            
-            if prompt == "e":
-                id = Question.get_question_id()
-                Question.enable(id)
-                break
-            elif prompt == "d":
-                id = Question.get_question_id()
-                Question.disable(id)  
-                break      
-            else:
-                print("Not a valid choice.")
+            if prompt not in ["e", "d"]:
+                print("Not a valid choice")
                 continue
-        return None
+            else:
+                question = Question.get_question_id()
+            
+                if prompt == "e":
+                    while True:
+                        choice = input(f"Are you sure you want to enable the following question: \"{question['questionContent']}\" (Y/N)?" ).strip().lower()
+                        if choice == "y":
+                            Question.enable(question["questionId"])
+                            return
+                        elif choice == "n":
+                            print("Question not enabled.")
+                            return
+                        else:
+                            print("Not a valid option")
+                            continue
+                elif prompt == "d":
+                    while True:
+                        choice = input(f"Are you sure you want to disable the following question: \"{question['questionContent']}\" (Y/N)?" ).strip().lower()
+                        if choice == "y":
+                            Question.disable(question["questionId"])
+                            return
+                        elif choice == "n":
+                            print("Question not disabled.")
+                            return
+                        else:
+                            print("Not a valid option")
+                            continue    
             
     @staticmethod
     def show_statistics(user: User) -> None:
