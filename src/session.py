@@ -158,14 +158,8 @@ class Session:
                         for idx,opt in enumerate(question["questionOptions"]):
                             print(f" {idx+1} - {opt}")
                     
-                    times_answered = 0
-                    times_shown = 0
-                    
-
-                    for us in question["timesAnswered"][0].values():
-                        times_answered += us
-                    for us in question["timesShown"][0].values():
-                        times_shown += us
+                    times_answered = question["timesAnswered"][0][user.id]
+                    times_shown = question["timesShown"][0][user.id]
 
                     if times_shown == 0:
                         score = 0.0
