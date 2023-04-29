@@ -140,10 +140,25 @@ class Session:
                         print("Options: ")
                         for idx,opt in enumerate(question["questionOptions"]):
                             print(f" {idx+1} - {opt}")
-                    for us in question["timesAnswered"]:
-                        print(f"Times answered: {us[user.id]}")
-                    for us in question["timesShown"]:
-                        print(f"Times shown: {us[user.id]}")
+                    
+                    times_answered = 0
+                    times_shown = 0
+                    
+
+                    for us in question["timesAnswered"][0].values():
+                        times_answered += us
+                    for us in question["timesShown"][0].values():
+                        times_shown += us
+
+                    if times_shown == 0:
+                        score = 0.0
+                    else:
+                        score = times_answered / times_shown * 100
+
+
+                    print(f"Answer score: {int(score)} %")
+
+                    print(f"Times shown: {times_shown}")
 
         print()
         print("--> Statistics mode ended <--")
