@@ -191,10 +191,19 @@ class Session:
         with open(self.json_file, "r+") as file:
             file_data = json.load(file)
 
-            if len(file_data["questions"]) < 5:
-                print("You need to have at least 5 questions to enter practice mode.")
+            num_of_available_questions = 0
+            for question in file_data["questions"]:
+                if question["questionStatus"] == "enabled":
+                    num_of_available_questions += 1
+
+            if num_of_available_questions < 5:
+                print("You need to have at least 5 questions enabled to enter practice mode.")
             else:
                 for question in file_data["questions"]:
+
+                    if question["questionStatus"] == "disabled":
+                        continue
+
                     print(f"ID: {question['questionId']}")
                     print(f"Question: {question['questionContent']}")
 
@@ -238,13 +247,19 @@ class Session:
         # Ask user how many question they want to play
         with open(self.json_file, "r+") as file:
             file_data = json.load(file)
-            num_of_available_questions = len(file_data["questions"])
+            
+            idx_of_questions_available: list[int] = []
 
-            if num_of_available_questions < 5:
-                print("You need to have at least 5 questions to enter test mode.")
+            for question in file_data["questions"]:
+                if question["questionStatus"] == "enabled":
+                    idx_of_questions_available.append(file_data["questions"].index(question))
+
+
+            if len(idx_of_questions_available) < 5:
+                print("You need to have at least 5 questions enabled to enter test mode.")
             else:
                 while test_in_progress:
-                    num_of_questions = input(f"How many questions would you like to play with? Available: {num_of_available_questions} ")
+                    num_of_questions = input(f"How many questions would you like to play with? Available: {len(idx_of_questions_available)} ")
                     if not num_of_questions:
                         print("Cannot be blank")
                         continue
@@ -255,20 +270,12 @@ class Session:
                         print("Not a valid option")
                         continue
                     
-                    if int(num_of_questions) > num_of_available_questions:
+                    if int(num_of_questions) > len(idx_of_questions_available):
                         print("Not enough questions")
                         continue
                     
-                    random_idx: list[int] = []
-                    while len(random_idx) != int(num_of_questions):
-
-                        idx = random.randrange(0, int(num_of_questions))
-                        if idx in random_idx:
-                            continue
-                        else:
-                            random_idx.append(idx)
                     
-                    for idx in random_idx:
+                    for idx in random.sample(idx_of_questions_available, int(num_of_questions)):
                         question = file_data["questions"][idx]
                         print(f"ID: {question['questionId']}")
                         print(f"Question: {question['questionContent']}")

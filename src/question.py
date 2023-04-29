@@ -85,16 +85,16 @@ class Question:
                 answer = input("Enter the option number: ")
 
                 try:
-                    answer = int(answer)
+                    int(answer)
                 except TypeError:
                     print("Not a valid option.")
                     continue
 
-                if (answer-1) not in range(self.number_of_options):
+                if (int(answer)-1) not in range(self.number_of_options):
                     print("Not one of the options available")
                     continue
 
-                self.answer = str(answer-1)
+                self.answer = answer
                 break
         else:
             while True:

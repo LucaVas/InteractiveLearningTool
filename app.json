@@ -23,14 +23,14 @@
             "questionAnswer": "test free answer",
             "timesAnswered": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 4,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 6,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 2,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 4,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 7,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
@@ -56,7 +56,7 @@
             ],
             "timesShown": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 3,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 6,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
@@ -71,14 +71,14 @@
             "questionAnswer": "Luca",
             "timesAnswered": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 3,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 5,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 3,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 6,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
@@ -86,7 +86,7 @@
         },
         {
             "questionId": "a7e86241-e466-11ed-b19d-1062e5eae566",
-            "questionStatus": "enabled",
+            "questionStatus": "disabled",
             "questionType": "free-form",
             "questionContent": "What is the author's wife name?",
             "questionOptions": [],
@@ -100,7 +100,7 @@
             ],
             "timesShown": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 2,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 3,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 3,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
@@ -121,14 +121,14 @@
             ],
             "timesShown": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 2,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ]
         },
         {
             "questionId": "aa8ceee3-e582-11ed-8c7b-1062e5eae566",
-            "questionStatus": "enabled",
+            "questionStatus": "disabled",
             "questionType": "quiz",
             "questionContent": "test quiz",
             "questionOptions": [
@@ -138,14 +138,14 @@
             "questionAnswer": "1",
             "timesAnswered": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 1,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
             ],
             "timesShown": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 1,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
@@ -153,7 +153,7 @@
         },
         {
             "questionId": "c8b3c69e-e676-11ed-b2d8-1062e5eae566",
-            "questionStatus": "disabled",
+            "questionStatus": "enabled",
             "questionType": "quiz",
             "questionContent": "quiz question 1",
             "questionOptions": [
@@ -171,7 +171,7 @@
             ],
             "timesShown": [
                 {
-                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 1,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0
                 }
