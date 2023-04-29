@@ -50,6 +50,9 @@ class User:
             json.dump(file_data, file, indent = 4)
 
     def add_user_to_questions(self) -> None:
+        """
+            function which adds new user's information to the previously questions added (times shown and times answered)
+        """        
         with open(self.json_file,'r+') as file:
             file_data = json.load(file)
             for question in file_data["questions"]:
@@ -62,34 +65,25 @@ class User:
         """
             Function which set current user to existing user, if found
         """
-        while True:
-            name = input("Enter your username: ").strip().lower()
-            if self.find_user(name) is False:
-                print("User not found")
-                continue
-            else:
-                user_dict = self.find_user(name)
-                self._is_user = True
-                self.username = name
-                self.id = user_dict.get("userId")
-                print(self.welcome_user(True))
-                break
-
-    def find_user(self, name) -> dict[str, str] | bool:
-        """
-            Function that checks if user with same username is already registered
-        """
         with open(self.json_file,'r') as file:
           # First we load existing data into a dict.
             file_data = json.load(file)
-            # Join new_data with file_data inside emp_details
+
+        while True:
+            name = input("Enter your username: ").strip().lower()
+
             for user in file_data["users"]:
                 if user.get("userName") == name:
-                    return user
+                    self.username = user["userName"]
+                    self.id = user["userId"]
+                    self._is_user = True
+                    print(self.welcome_user(True))
+                    return
                 else:
                     continue
-                
-            return False
+            else:
+                print("User not found")
+                continue
         
     def welcome_user(self, is_new_user: bool) -> str:
         """

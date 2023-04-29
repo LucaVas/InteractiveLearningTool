@@ -45,20 +45,20 @@ def main():
         mode = session.choose_mode()
         if mode == "question":
             # Add questions mode
-            if session.question_mode(user.id) is False:
+            if session.question_mode(user) is False:
                 continue
         elif mode == "statistics":
             # View statistics mode
-            session.show_statistics(user.id)
+            session.show_statistics(user)
         elif mode == "disable/enable questions":
             # Enable/disable questions mode
-            session.enable_disable_mode() is False
+            session.enable_disable_mode()
         elif mode == "practice":
             # Practice mode
-            session.practice_mode(user.id) is False
+            session.practice_mode(user)
         elif mode == "test":
             # Test mode
-            session.test_mode(user.id)
+            session.test_mode(user)
         else:
             print("Mode not available.")
 
