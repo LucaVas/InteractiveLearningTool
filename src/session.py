@@ -179,48 +179,66 @@ class Session:
         
         print()
         print("--> Practice mode started <--")
-        print()
+        print() 
+
+        practice_in_progress = True
+
+        # indexes of questions enabled
+        available_questions_idx: list[int] = []
 
 
         with open(self.json_file, "r+") as file:
             file_data = json.load(file)
 
-            num_of_available_questions = 0
             for question in file_data["questions"]:
                 if question["questionStatus"] == "enabled":
-                    num_of_available_questions += 1
+                    available_questions_idx.append(file_data["questions"].index(question))
 
-            if num_of_available_questions < 5:
+            if len(available_questions_idx) < 5:
                 print("You need to have at least 5 questions enabled to enter practice mode.")
             else:
-                for question in file_data["questions"]:
+                while practice_in_progress:
+                    # get list of scores (weights)
+                    weights = Question.weight_questions(file_data["questions"], available_questions_idx, user)
+                    try:
+                        weighted_list = random.choices(available_questions_idx, weights=weights, k=len(available_questions_idx))
+                    # if none of the questions have yet been shown or answered
+                    except ValueError:
+                        weighted_list = available_questions_idx
 
-                    if question["questionStatus"] == "disabled":
-                        continue
+                    for idx in weighted_list:
+                        question = file_data["questions"][idx]
 
-                    print(f"ID: {question['questionId']}")
-                    print(f"Question: {question['questionContent']}")
+                        print(f"ID: {question['questionId']}")
+                        print(f"Weight: {weights, weighted_list}")
+                        print(f"Question: {question['questionContent']}")
 
-                    if question["questionType"] == "quiz":
-                        print("Options: ")
-                        for idx,opt in enumerate(question["questionOptions"]):
-                            print(f"    {idx+1} - {opt}")
+                        if question["questionType"] == "quiz":
+                            print("Options: ")
+                            for idx,opt in enumerate(question["questionOptions"]):
+                                print(f"    {idx+1} - {opt}")
 
-                    answer = input("What is the answer? ")
-                    if answer == question["questionAnswer"]:
-                        print("Correct answer")
-                        question["timesAnswered"][0][user.id] += 1
-                        print("----------")
-                    else:
-                        print(f"Incorrect. The correct answer is: {question['questionAnswer']}")
-                        print("----------")
-                    
-                    question["timesShown"][0][user.id] += 1
+                        answer = input("What is the answer? ")
+                        if answer == question["questionAnswer"]:
+                            print("Correct answer")
+                            question["timesAnswered"][0][user.id] += 1
+                            print("----------")
+                        else:
+                            print(f"Incorrect. The correct answer is: {question['questionAnswer']}\n")
+                        
+                        question["timesShown"][0][user.id] += 1
 
-                # Sets file's current position at offset.
-                file.seek(0)
-                # convert back to json.
-                json.dump(file_data, file, indent = 4)
+                        if not (input("Would you like to continue in practice mode? Press Enter to continue, or any other key to stop: ").lower().strip()):
+                            print("----------")
+                            continue
+                        else:
+                            practice_in_progress = False
+                            break
+
+                    # Sets file's current position at offset.
+                    file.seek(0)
+                    # convert back to json.
+                    json.dump(file_data, file, indent = 4)
 
 
         print()

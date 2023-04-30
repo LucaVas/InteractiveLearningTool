@@ -1,5 +1,4 @@
-import csv
-import pandas as pd
+from user import User
 import uuid
 import json
     
@@ -115,9 +114,8 @@ class Question:
             print(f"    Options:")
             for idx,opt in enumerate(self.options):
                 print(f"        {idx+1} - {opt}")
-            print(f"    Answer: {self.answer + 1}")
-        else:
-            print(f"    Answer: {self.answer}")
+        print(f"    Answer: {self.answer}")
+
 
     def save_question(self, user_id):  
         """
@@ -218,4 +216,21 @@ class Question:
         for idx,type in enumerate(cls.types.values()):
             print(f"{idx} - {type} question")
 
-    
+    @staticmethod
+    def weight_questions(questions, list_of_questions_idx, user: User):
+        """
+            function which accepts a list of indexes of questions, and returns a list of weights for each question (n. times the question is shown / n. times question is answered).
+            The less times the question is answered, the higher is the result of the division
+        """
+        weighted_questions: list[int] = []
+        
+        for idx in list_of_questions_idx:
+            question = questions[idx]
+            try:
+                weight =  question["timesShown"][0][user.id] / question["timesAnswered"][0][user.id]
+            except ZeroDivisionError:
+                # if question is never answered, the weight is = 1
+                weight = 1.0
+            weighted_questions.append(weight)
+
+        return weighted_questions
