@@ -9,11 +9,10 @@ class User:
         self.id = str(uuid.uuid1())
         self.is_user = is_user
         self.json_file = "../app.json"
-    
-    
+
     def register_user(self) -> None:
         """
-            Function which registers a new user
+        Function which registers a new user
         """
         registration_in_progress = True
         while registration_in_progress:
@@ -25,48 +24,48 @@ class User:
                 self.username = username
                 break
 
-        self.save_new_user()        
+        self.save_new_user()
         self.add_user_to_questions()
-        self.welcome_user(False)    
-        
+        self.welcome_user(False)
+
     def save_new_user(self) -> None:
         """
-            Function which saves a new user to the json file
+        Function which saves a new user to the json file
         """
 
         user_entry = {
             "userId": self.id,
             "userName": self.username,
         }
-        
-        with open(self.json_file,'r+') as file:
-          # First we load existing data into a dict.
+
+        with open(self.json_file, "r+") as file:
+            # First we load existing data into a dict.
             file_data = json.load(file)
             # Join new_data with file_data inside emp_details
             file_data["users"].append(user_entry)
             # Sets file's current position at offset.
             file.seek(0)
             # convert back to json.
-            json.dump(file_data, file, indent = 4)
+            json.dump(file_data, file, indent=4)
 
     def add_user_to_questions(self) -> None:
         """
-            function which adds new user's information to the previously questions added (times shown and times answered)
-        """        
-        with open(self.json_file,'r+') as file:
+        function which adds new user's information to the previously questions added (times shown and times answered)
+        """
+        with open(self.json_file, "r+") as file:
             file_data = json.load(file)
             for question in file_data["questions"]:
                 question["timesAnswered"][0].update({self.id: 0})
                 question["timesShown"][0].update({self.id: 0})
             file.seek(0)
-            json.dump(file_data, file, indent = 4)
+            json.dump(file_data, file, indent=4)
 
     def login(self) -> None:
         """
-            Function which set current user to existing user, if found
+        Function which set current user to existing user, if found
         """
-        with open(self.json_file,'r') as file:
-          # First we load existing data into a dict.
+        with open(self.json_file, "r") as file:
+            # First we load existing data into a dict.
             file_data = json.load(file)
 
         while True:
@@ -84,14 +83,13 @@ class User:
             else:
                 print("User not found")
                 continue
-        
+
     def welcome_user(self, is_new_user: bool) -> str:
         """
-            Function which welcome user; if new, confirms registration; if existing, welcomes back
+        Function which welcome user; if new, confirms registration; if existing, welcomes back
         """
 
         if is_new_user is True:
             return f"Welcome back, {self.username}!"
         else:
             return f"Registration succesfull. Welcome, {self.username}!"
-

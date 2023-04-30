@@ -11,18 +11,18 @@ If you wanna know more, please refer to README file.
 from user import User
 from session import Session
 
-def main() -> None: 
+
+def main() -> None:
 
     # Initiate new session
     session = Session()
     # Welcome user
     session.welcome()
 
-
     print("--> Registration/Login process <--\n")
     # Initialize new user
     user = User()
-    
+
     # New user?
     while True:
         res = input("Are you a new user? (Y/N) ").strip().lower()
@@ -35,7 +35,7 @@ def main() -> None:
         else:
             print("Not a valid option")
             continue
-    
+
     # modes available
     choosing_mode = True
     while choosing_mode:
@@ -64,8 +64,5 @@ def main() -> None:
             print("Mode not available.")
 
 
-
 if __name__ == "__main__":
     main()
-
-
