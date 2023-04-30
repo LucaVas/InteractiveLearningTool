@@ -5,8 +5,8 @@ import json
 class Question:
 
     types = {
-        0: "quiz",
-        1: "free-form"
+        1: "quiz",
+        2: "free-form"
     }
 
     json_file = "../app.json"
@@ -115,7 +115,6 @@ class Question:
             for idx,opt in enumerate(self.options):
                 print(f"        {idx+1} - {opt}")
         print(f"    Answer: {self.answer}")
-
 
     def save_question(self, user_id):  
         """

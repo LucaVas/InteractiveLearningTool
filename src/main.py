@@ -59,6 +59,9 @@ def main():
         elif mode == "test":
             # Test mode
             session.test_mode(user)
+        elif mode == "reset questions":
+            # Reset questions statistics for user
+            session.reset_questions_mode(user)
         else:
             print("Mode not available.")
 

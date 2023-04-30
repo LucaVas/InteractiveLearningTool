@@ -14,7 +14,8 @@ class Session:
         2 : "statistics",
         3 : "disable/enable questions",
         4 : "practice",
-        5 : "test"
+        5 : "test",
+        6 : "reset questions"
     }
 
     json_file = "../app.json"
@@ -350,3 +351,31 @@ class Session:
         print()
         print("--> Test mode ended <--")
         print()
+
+    def reset_questions_mode(self, user: User) -> None:   
+
+        print("\n--> Reset questions mode started <--\n")
+
+        print("The reset questions mode allows you to reset all statistics of questions answered related to your OWN user. All other users' statistics remain the same.")
+        choice = input("If you wish to continue and reset your user's statistics, press Enter - otherwise, press any other key, and enter: ").lower().strip()
+        if not choice:
+            if (input(f"Are you sure you want to reset your ({user.username}) statistics? (Y/N) ").lower().strip()) == "y":
+                with open(self.json_file, "r+") as file:
+                    file_data = json.load(file)
+
+                    for question in file_data["questions"]:
+                        question["timesAnswered"][0][user.id] = 0
+                        question["timesShown"][0][user.id] = 0
+
+                    file.seek(0)
+                    json.dump(file_data, file, indent = 4)
+
+                    print("Your statistics have been reset succesfully.")
+            else:
+                print("Your statistics have not been reset.") 
+        else:
+            print("Your statistics have not been reset.")
+
+        print("\n--> Reset questions mode ended <--\n")
+
+
