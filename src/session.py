@@ -26,14 +26,11 @@ class Session:
 
     @classmethod
     def welcome(cls) -> None:
-        print()
-        print(pyfiglet.figlet_format(f"Welcome to {cls.app_name}!", font='digital'))
-        print()
+        print(pyfiglet.figlet_format(f"\nWelcome to {cls.app_name}!", font='digital'))
 
     @classmethod
     def show_modes(cls) -> None:
-        print()
-        print("Available modes:")
+        print("\nAvailable modes:")
         for idx,mode in enumerate(cls.modes.values()):
             print(f"{idx+1} - {mode.capitalize()} mode")
 
@@ -61,9 +58,7 @@ class Session:
 
     @staticmethod
     def question_mode(user: User) -> bool | None:
-        print()
-        print("--> Adding question mode: <--")
-        print()
+        print("\n--> Adding question mode: <--\n")
 
         adding_question = True
         while adding_question is True:
@@ -98,9 +93,7 @@ class Session:
     
     @staticmethod
     def enable_disable_mode() -> None:
-        print()
-        print("--> Enable/disable question mode: <--")
-        print()
+        print("\n--> Enable/disable question mode started <--\n")
 
         while True:
             prompt = input("Do you want to enable or disable a question (E/D)? ").strip().lower()
@@ -115,32 +108,33 @@ class Session:
                         choice = input(f"Are you sure you want to enable the following question: \"{question['questionContent']}\" (Y/N)?" ).strip().lower()
                         if choice == "y":
                             Question.enable(question["questionId"])
-                            return
+                            break
                         elif choice == "n":
                             print("Question not enabled.")
-                            return
+                            break
                         else:
                             print("Not a valid option")
-                            continue
+                            break
                 elif prompt == "d":
                     while True:
                         choice = input(f"Are you sure you want to disable the following question: \"{question['questionContent']}\" (Y/N)?" ).strip().lower()
                         if choice == "y":
                             Question.disable(question["questionId"])
-                            return
+                            break
                         elif choice == "n":
                             print("Question not disabled.")
-                            return
+                            break
                         else:
                             print("Not a valid option")
-                            continue    
-            
+                            continue   
+                break
+        
+        print("\n--> Enable/disable question mode ended <--\n")
+         
     @staticmethod
     def show_statistics(user: User) -> None:
 
-        print()
-        print("--> Statistics mode started <--")
-        print()
+        print("\n--> Statistics mode started <--\n")
 
         with open(Session.json_file, "r") as file:
             # First we load existing data into a dict.
@@ -172,15 +166,11 @@ class Session:
 
                     print(f"Times shown: {times_shown}")
 
-        print()
-        print("--> Statistics mode ended <--")
-        print()
+        print("\n--> Statistics mode ended <--\n")
 
     def practice_mode(self, user: User) -> None:
         
-        print()
-        print("--> Practice mode started <--")
-        print() 
+        print("\n--> Practice mode started <--\n")
 
         practice_in_progress = True
 
@@ -242,18 +232,14 @@ class Session:
                     json.dump(file_data, file, indent = 4)
 
 
-        print()
-        print("--> Practice mode ended <--")
-        print()
+        print("\n--> Practice mode ended <--")
 
     def test_mode(self, user: User) -> None:
         """
             function which starts test mode and saves results in results.txt
         """
                 
-        print()
-        print("--> Test mode started <--")
-        print()
+        print("\n--> Test mode started <--\n")
 
         test_in_progress = True
         answers = 0.0
@@ -348,9 +334,7 @@ class Session:
             print("Results: ")
             print("\n".join(results_output))
 
-        print()
-        print("--> Test mode ended <--")
-        print()
+        print("\n--> Test mode ended <--\n")
 
     def reset_questions_mode(self, user: User) -> None:   
 

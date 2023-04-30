@@ -1,6 +1,7 @@
 from user import User
 import uuid
 import json
+from typing import Any
     
 class Question:
 
@@ -216,7 +217,7 @@ class Question:
             print(f"{idx} - {type} question")
 
     @staticmethod
-    def weight_questions(questions, list_of_questions_idx, user: User):
+    def weight_questions(questions: list[dict[str, Any]], list_of_questions_idx: list[int], user: User) -> list[int]:
         """
             function which accepts a list of indexes of questions, and returns a list of weights for each question (n. times the question is shown / n. times question is answered).
             The less times the question is answered, the higher is the result of the division

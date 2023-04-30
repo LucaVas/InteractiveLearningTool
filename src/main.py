@@ -10,9 +10,8 @@ If you wanna know more, please refer to README file.
 
 from user import User
 from session import Session
-from question import Question
 
-def main(): 
+def main() -> None: 
 
     # Initiate new session
     session = Session()
@@ -20,8 +19,7 @@ def main():
     session.welcome()
 
 
-    print("--> Registration/Login process <--")
-    print()
+    print("--> Registration/Login process <--\n")
     # Initialize new user
     user = User()
     
