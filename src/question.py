@@ -242,8 +242,8 @@ class Question:
                     / question["timesAnswered"][0][user.id]
                 )
             except ZeroDivisionError:
-                # if question is never answered, the weight is = 1
-                weight = 1.0
+                # if question is never answered, the weight is 2, since questions answered / shown is 1
+                weight = 2
             weighted_questions.append(weight)
 
         return weighted_questions
