@@ -1,6 +1,6 @@
 # Session class responsible for welcoming and goodbying
 import pyfiglet  # type: ignore
-from question import Question
+from src.question import Question 
 from user import User
 import sys
 import json

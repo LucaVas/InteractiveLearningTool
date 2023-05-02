@@ -29,7 +29,7 @@ class Question:
         """
         function that clears the options and answer
         """
-        self.options = []
+        self.options.clear()
         self.answer = ""
 
     def select_question_type(self) -> None:
