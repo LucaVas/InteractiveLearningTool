@@ -1,6 +1,7 @@
 import uuid
 import json
 from termcolor import colored
+import re
 
 PASS_CLR = "green"
 WARNING_CLR = "yellow"
@@ -24,6 +25,9 @@ class User:
             if not username.strip():
                 print(colored("Username cannot be blank.", WARNING_CLR))
                 continue
+            elif self.validate_username(username) is False:
+                print(colored("Username must be lowercase and contain at least 1 digit.", WARNING_CLR))
+                continue
             else:
                 self.username = username
                 break
@@ -31,6 +35,14 @@ class User:
         self.save_new_user()
         self.add_user_to_questions()
         self.welcome_user(False)
+
+    def validate_username(self, username: str) -> bool:
+        regex = r"^(?:[0-9]+[a-z]|[a-z]+[0-9])[a-z0-9]*$"
+        if re.fullmatch(regex, username) is None:
+            return False
+        else:
+            return True
+
 
     def save_new_user(self) -> None:
         """
