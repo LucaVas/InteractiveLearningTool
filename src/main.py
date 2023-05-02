@@ -10,7 +10,12 @@ If you wanna know more, please refer to README file.
 
 from user import User
 from session import Session
+from termcolor import colored
 
+PASS_CLR = "green"
+WARNING_CLR = "yellow"
+ERROR_CLR = "red"
+MODE_CLR = "blue"
 
 def main() -> None:
 
@@ -19,7 +24,7 @@ def main() -> None:
     # Welcome user
     session.welcome()
 
-    print("--> Registration/Login process <--\n")
+    print(colored("--> Registration/Login process <--\n", MODE_CLR))
     # Initialize new user
     user = User()
 
@@ -33,7 +38,7 @@ def main() -> None:
             user.login()
             break
         else:
-            print("Not a valid option")
+            print(colored("Not a valid option", WARNING_CLR))
             continue
 
     # modes available
@@ -61,7 +66,7 @@ def main() -> None:
             # Reset questions statistics for user
             session.reset_questions_mode(user)
         else:
-            print("Mode not available.")
+            print(colored("Mode not available.", ERROR_CLR))
 
 
 if __name__ == "__main__":

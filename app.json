@@ -19,6 +19,14 @@
         {
             "userId": "c741a139-e760-11ed-93eb-1062e5eae566",
             "userName": "antanas"
+        },
+        {
+            "userId": "becd56ad-e91a-11ed-8a6f-1062e5eae566",
+            "userName": "user"
+        },
+        {
+            "userId": "ef5beb5e-e91a-11ed-9080-1062e5eae566",
+            "userName": "maximilian"
         }
     ],
     "questions": [
@@ -39,7 +47,9 @@
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
                     "cfde6b28-e75d-11ed-be46-1062e5eae566": 3,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 2
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 2,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ],
             "timesShown": [
@@ -47,8 +57,10 @@
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
-                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 4,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 2
+                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 5,
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 2,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ]
         },
@@ -70,7 +82,9 @@
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
                     "cfde6b28-e75d-11ed-be46-1062e5eae566": 3,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 0
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 0,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ],
             "timesShown": [
@@ -79,7 +93,9 @@
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
                     "cfde6b28-e75d-11ed-be46-1062e5eae566": 3,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 1
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 1,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ]
         },
@@ -101,8 +117,10 @@
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
-                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 0,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 3
+                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 1,
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 3,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ],
             "timesShown": [
@@ -110,8 +128,10 @@
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
-                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 1,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 5
+                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 2,
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 5,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ]
         },
@@ -134,7 +154,9 @@
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
                     "cfde6b28-e75d-11ed-be46-1062e5eae566": 3,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 4
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 4,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ],
             "timesShown": [
@@ -143,7 +165,9 @@
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
                     "cfde6b28-e75d-11ed-be46-1062e5eae566": 6,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 5
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 5,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ]
         },
@@ -165,7 +189,9 @@
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
                     "cfde6b28-e75d-11ed-be46-1062e5eae566": 3,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 0
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 0,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ],
             "timesShown": [
@@ -174,7 +200,9 @@
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
                     "cfde6b28-e75d-11ed-be46-1062e5eae566": 8,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 0
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 0,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ]
         },
@@ -190,8 +218,10 @@
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
-                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 0,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 2
+                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 1,
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 2,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ],
             "timesShown": [
@@ -199,8 +229,10 @@
                     "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
-                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 1,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 2
+                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 2,
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 2,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ]
         },
@@ -221,7 +253,42 @@
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
                     "cfde6b28-e75d-11ed-be46-1062e5eae566": 1,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 3
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 3,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
+                }
+            ],
+            "timesShown": [
+                {
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
+                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 2,
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 3,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
+                }
+            ]
+        },
+        {
+            "questionId": "52f79ab5-e91b-11ed-8325-1062e5eae566",
+            "questionStatus": "enabled",
+            "questionType": "quiz",
+            "questionContent": "What is the capital of Lithuania?",
+            "questionOptions": [
+                "Kaunas",
+                "Vilnius"
+            ],
+            "questionAnswer": "2",
+            "timesAnswered": [
+                {
+                    "ee876acc-e453-11ed-8eb2-1062e5eae566": 0,
+                    "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
+                    "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
+                    "cfde6b28-e75d-11ed-be46-1062e5eae566": 0,
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 0,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ],
             "timesShown": [
@@ -230,7 +297,9 @@
                     "f1dc7819-e453-11ed-a148-1062e5eae566": 0,
                     "c0d19116-e583-11ed-aa87-1062e5eae566": 0,
                     "cfde6b28-e75d-11ed-be46-1062e5eae566": 1,
-                    "c741a139-e760-11ed-93eb-1062e5eae566": 3
+                    "c741a139-e760-11ed-93eb-1062e5eae566": 0,
+                    "becd56ad-e91a-11ed-8a6f-1062e5eae566": 0,
+                    "ef5beb5e-e91a-11ed-9080-1062e5eae566": 0
                 }
             ]
         }

@@ -1,6 +1,10 @@
-import csv
 import uuid
 import json
+from termcolor import colored
+
+PASS_CLR = "green"
+WARNING_CLR = "yellow"
+ERROR_CLR = "red"
 
 # User class is responsible for creating, updating and deleting new users
 class User:
@@ -18,7 +22,7 @@ class User:
         while registration_in_progress:
             username = input("Enter a new username: ")
             if not username.strip():
-                print("Username cannot be blank.")
+                print(colored("Username cannot be blank.", WARNING_CLR))
                 continue
             else:
                 self.username = username
@@ -76,20 +80,20 @@ class User:
                     self.username = user["userName"]
                     self.id = user["userId"]
                     self._is_user = True
-                    print(self.welcome_user(True))
+                    self.welcome_user(True)
                     return
                 else:
                     continue
             else:
-                print("User not found")
+                print((colored("User not found", ERROR_CLR)))
                 continue
 
-    def welcome_user(self, is_new_user: bool) -> str:
+    def welcome_user(self, is_new_user: bool) -> None:
         """
         Function which welcome user; if new, confirms registration; if existing, welcomes back
         """
 
         if is_new_user is True:
-            return f"Welcome back, {self.username}!"
+            print(colored(f"Welcome back, {self.username}!", PASS_CLR))
         else:
-            return f"Registration succesfull. Welcome, {self.username}!"
+            print(colored(f"Registration succesful. Welcome, {self.username}!", PASS_CLR))

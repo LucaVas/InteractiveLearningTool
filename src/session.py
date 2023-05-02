@@ -5,6 +5,12 @@ from user import User
 import sys
 import json
 import random
+from termcolor import colored
+
+PASS_CLR = "green"
+WARNING_CLR = "yellow"
+ERROR_CLR = "red"
+MODE_CLR = "blue"
 
 
 class Session:
@@ -57,19 +63,19 @@ class Session:
 
             if choice == "q":
                 print()
-                sys.exit("Thank you for using InteLTool. See ya!")
+                sys.exit(colored("Thank you for using InteLTool. See ya!", MODE_CLR))
 
             try:
                 int(choice)
             except ValueError:
-                print("Not a valid choice.")
+                print(colored("Not a valid choice.", ERROR_CLR))
                 continue
 
             if int(choice) in cls.modes.keys():
-                print(f"{cls.modes[int(choice)].capitalize()} mode selected.")
+                print(colored(f"{cls.modes[int(choice)].capitalize()} mode selected.", PASS_CLR))
                 return cls.modes[int(choice)]
             else:
-                print("Not a valid choice.")
+                print(colored("Not a valid choice.", ERROR_CLR))
                 continue
 
     @staticmethod
@@ -77,7 +83,7 @@ class Session:
         """
             function which initializes and processes the mode responsible for adding questions
         """
-        print("\n--> Adding question mode: <--\n")
+        print(colored("\n--> Adding question mode started <--\n", MODE_CLR))
 
         adding_question = True
         while adding_question is True:
@@ -100,15 +106,16 @@ class Session:
                 input("Do you want to save this question (Y/N)? ").strip().lower()
             ) == "y":
                 question.save_question()
-                print("Question saved succesfully")
+                print(colored("Question saved succesfully", PASS_CLR))
             else:
-                print("Question not saved.")
+                print(colored("Question not saved.", ERROR_CLR))
 
             if (
                 input("Do you want to add another question (Y/N)? ").strip().lower()
             ) == "y":
                 continue
             else:
+                print(colored("\n--> Adding question mode finished <--\n", MODE_CLR))
                 return False
 
         return None
@@ -118,7 +125,7 @@ class Session:
         """
             function which initializes and process the mode responsible for enabling and disabling questions
         """
-        print("\n--> Enable/disable question mode started <--\n")
+        print(colored("\n--> Enable/disable question mode started <--\n", MODE_CLR))
 
         while True:
             prompt = (
@@ -127,7 +134,7 @@ class Session:
                 .lower()
             )
             if prompt not in ["e", "d"]:
-                print("Not a valid choice")
+                print(colored("Not a valid choice", WARNING_CLR))
                 continue
             else:
                 question = Question.get_question_id()
@@ -136,7 +143,7 @@ class Session:
                     while True:
                         choice = (
                             input(
-                                f"Are you sure you want to enable the following question: \"{question['questionContent']}\" (Y/N)?"
+                                f"Are you sure you want to enable the following question: \"{question['questionContent']}\" (Y/N)? "
                             )
                             .strip()
                             .lower()
@@ -145,10 +152,10 @@ class Session:
                             Question.enable(question["questionId"])
                             break
                         elif choice == "n":
-                            print("Question not enabled.")
+                            print(colored("Question not enabled.", PASS_CLR))
                             break
                         else:
-                            print("Not a valid option")
+                            print(colored("Not a valid option", WARNING_CLR))
                             break
                 elif prompt == "d":
                     while True:
@@ -163,14 +170,14 @@ class Session:
                             Question.disable(question["questionId"])
                             break
                         elif choice == "n":
-                            print("Question not disabled.")
+                            print(colored("Question not disabled.", PASS_CLR))
                             break
                         else:
-                            print("Not a valid option")
+                            print(colored("Not a valid option", WARNING_CLR))
                             continue
                 break
 
-        print("\n--> Enable/disable question mode ended <--\n")
+        print(colored("\n--> Enable/disable question mode ended <--\n", MODE_CLR))
 
     @staticmethod
     def show_statistics(user: User) -> None:
@@ -179,7 +186,7 @@ class Session:
             Statistics are shown based only for the specific user results.
         """
 
-        print("\n--> Statistics mode started <--\n")
+        print(colored("\n--> Statistics mode started <--\n", MODE_CLR))
 
         with open(Session.json_file, "r") as file:
             # First we load existing data into a dict.
@@ -210,7 +217,7 @@ class Session:
 
                     print(f"Times shown: {times_shown}")
 
-        print("\n--> Statistics mode ended <--\n")
+        print(colored("\n--> Statistics mode ended <--\n", MODE_CLR))
 
     def practice_mode(self, user: User) -> None:
         """
@@ -219,7 +226,7 @@ class Session:
             user can stops at any time the practice by entering an input different than enter
         """
 
-        print("\n--> Practice mode started <--\n")
+        print(colored("\n--> Practice mode started <--\n", MODE_CLR))
 
         practice_in_progress = True
 
@@ -237,7 +244,7 @@ class Session:
 
             if len(available_questions_idx) < 5:
                 print(
-                    "You need to have at least 5 questions enabled to enter practice mode."
+                    colored("You need to have at least 5 questions enabled to enter practice mode.", WARNING_CLR)
                 )
             else:
                 while practice_in_progress:
@@ -259,7 +266,6 @@ class Session:
                         question = file_data["questions"][idx]
 
                         print(f"ID: {question['questionId']}")
-                        print(f"Weight: {weights, weighted_list}")
                         print(f"Question: {question['questionContent']}")
 
                         if question["questionType"] == "quiz":
@@ -269,19 +275,19 @@ class Session:
 
                         answer = input("What is the answer? ")
                         if answer == question["questionAnswer"]:
-                            print("Correct answer")
+                            print(colored("Correct answer", PASS_CLR))
                             question["timesAnswered"][0][user.id] += 1
                             print("----------")
                         else:
                             print(
-                                f"Incorrect. The correct answer is: {question['questionAnswer']}\n"
+                                colored(f"Incorrect. The correct answer is: {question['questionAnswer']}\n", ERROR_CLR)
                             )
 
                         question["timesShown"][0][user.id] += 1
 
                         if not (
                             input(
-                                "Would you like to continue in practice mode? Press Enter to continue, or any other key to stop: "
+                                "Would you like to continue in practice mode? Press Enter to continue, or any other key & enter to stop: "
                             )
                             .lower()
                             .strip()
@@ -297,14 +303,14 @@ class Session:
                     # convert back to json.
                     json.dump(file_data, file, indent=4)
 
-        print("\n--> Practice mode ended <--")
+        print(colored("\n--> Practice mode ended <--", MODE_CLR))
 
     def test_mode(self, user: User) -> None:
         """
         function which initializes and processes the mode responsible for testing, and saves results in results.txt
         """
 
-        print("\n--> Test mode started <--\n")
+        print(colored("\n--> Test mode started <--\n", MODE_CLR))
 
         test_in_progress = True
         answers = 0.0
@@ -322,32 +328,32 @@ class Session:
 
             if len(idx_of_questions_available) < 5:
                 print(
-                    "You need to have at least 5 questions enabled to enter test mode."
+                    colored("You need to have at least 5 questions enabled to enter test mode.", WARNING_CLR)
                 )
             else:
                 while test_in_progress:
                     num_of_questions = input(
-                        f"How many questions would you like to play with? Available: {len(idx_of_questions_available)} "
+                        f"How many questions would you like to play with? (Available: {len(idx_of_questions_available)})   "
                     )
                     if not num_of_questions:
-                        print("Cannot be blank")
+                        print(colored("Cannot be blank", WARNING_CLR))
                         continue
 
                     try:
                         int(num_of_questions)
                     except TypeError:
-                        print("Not a valid option")
+                        print(colored("Not a valid option", WARNING_CLR))
                         continue
 
                     if int(num_of_questions) > len(idx_of_questions_available):
-                        print("Not enough questions")
+                        print(colored("Not enough questions", WARNING_CLR))
                         continue
 
                     for idx in random.sample(
                         idx_of_questions_available, int(num_of_questions)
                     ):
                         question = file_data["questions"][idx]
-                        print(f"ID: {question['questionId']}")
+                        print(f"\nID: {question['questionId']}")
                         print(f"Question: {question['questionContent']}")
 
                         answer: int | str
@@ -357,18 +363,18 @@ class Session:
                             for idx, opt in enumerate(question["questionOptions"]):
                                 print(f"    {idx+1} - {opt}")
 
-                            answer = int(input("What is the answer? "))
+                            answer = input("What is the answer? Select a number: ")
                         else:
-                            answer = input(("What is the answer? "))
+                            answer = input(("What is the answer? (Careful, it's case sensitive) : "))
 
                         if answer == question["questionAnswer"]:
-                            print("Correct answer")
+                            print(colored("Correct answer", PASS_CLR))
                             question["timesAnswered"][0][user.id] += 1
                             answers += 1
                             print("----------")
                         else:
                             print(
-                                f"Incorrect. The correct answer is: {question['questionAnswer']}"
+                                colored(f"Incorrect. The correct answer is: {question['questionAnswer']}", ERROR_CLR)
                             )
                             print("----------")
 
@@ -387,15 +393,16 @@ class Session:
             results_output = [
                 f"Questions shown: {num_of_questions}",
                 f"Questions answered correctly: {int(answers)}",
-                f"You scored: {score:.2f} %\n",
+                f"You scored: {score:.2f} %\n"
             ]
 
             results_to_file = [
                 f"User ID: {user.id}",
                 f"Questions shown: {num_of_questions}",
                 f"Questions answered correctly: {int(answers)}",
-                f"Score: {score:.2f} %",
+                f"Score: {score:.2f} %#\n",
                 "\n",
+                "Your results are saved in results.txt for future consultation.\n"
             ]
 
             with open(self.results_file, "a") as file:
@@ -405,14 +412,14 @@ class Session:
             print("Results: ")
             print("\n".join(results_output))
 
-        print("\n--> Test mode ended <--\n")
+        print(colored("\n--> Test mode ended <--\n", MODE_CLR))
 
     def reset_questions_mode(self, user: User) -> None:
         """
             function which initializes and processes the mode responsbile for resetting user's statistics
             only the specific user's (who is using this mode) statistics are resetted
         """
-        print("\n--> Reset questions mode started <--\n")
+        print(colored("\n--> Reset questions mode started <--\n", MODE_CLR))
 
         print(
             "The reset questions mode allows you to reset all statistics of questions answered related to your OWN user. All other users' statistics remain the same."
@@ -427,7 +434,7 @@ class Session:
         if not choice:
             if (
                 input(
-                    f"Are you sure you want to reset your ({user.username}) statistics? (Y/N) "
+                    colored(f"Are you sure you want to reset your ({user.username}) statistics? (Y/N) ", WARNING_CLR)
                 )
                 .lower()
                 .strip()
@@ -442,10 +449,10 @@ class Session:
                     file.seek(0)
                     json.dump(file_data, file, indent=4)
 
-                    print("Your statistics have been reset succesfully.")
+                    print(colored("Your statistics have been reset succesfully.", PASS_CLR))
             else:
-                print("Your statistics have not been reset.")
+                print(colored("Your statistics have not been reset.", PASS_CLR))
         else:
-            print("Your statistics have not been reset.")
+            print(colored("Your statistics have not been reset.", PASS_CLR))
 
-        print("\n--> Reset questions mode ended <--\n")
+        print(colored("\n--> Reset questions mode ended <--\n", MODE_CLR))

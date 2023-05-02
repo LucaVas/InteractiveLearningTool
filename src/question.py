@@ -2,6 +2,12 @@ from user import User
 import uuid
 import json
 from typing import Any
+from termcolor import colored
+
+PASS_CLR = "green"
+WARNING_CLR = "yellow"
+ERROR_CLR = "red"
+MODE_CLR = "blue"
 
 
 class Question:
@@ -35,14 +41,14 @@ class Question:
             try:
                 int(choice)
             except ValueError:
-                print("Not a valid choice.")
+                print(colored("Not a valid choice.", WARNING_CLR))
                 continue
 
-            if choice in Question.types.keys():
+            if int(choice) in Question.types.keys():
                 self.type = Question.types[int(choice)]
                 break
             else:
-                print("Not a valid choice.")
+                print(colored("Not a valid choice.", WARNING_CLR))
                 continue
 
     def add_content(self) -> None:
@@ -57,7 +63,7 @@ class Question:
                 try:
                     self.number_of_options = int(num_of_options)
                 except TypeError:
-                    print("Not a valid number.")
+                    print(colored("Not a valid number.", WARNING_CLR))
                     continue
 
                 if self.number_of_options != 0:
@@ -69,7 +75,7 @@ class Question:
                 while True:
                     opt = input(f"Enter option {i+1}: ")
                     if not opt:
-                        print("The option cannot be blank.")
+                        print(colored("The option cannot be blank.", WARNING_CLR))
                         continue
                     else:
                         self.options.append(opt)
@@ -91,11 +97,11 @@ class Question:
                 try:
                     int(ans)
                 except TypeError:
-                    print("Not a valid option.")
+                    print(colored("Not a valid option.", WARNING_CLR))
                     continue
 
                 if (int(ans) - 1) not in range(self.number_of_options):
-                    print("Not one of the options available")
+                    print(colored("Not one of the options available", WARNING_CLR))
                     continue
                 else:
                     break
@@ -105,7 +111,7 @@ class Question:
                 ans = input("Enter a free-text answer: ")
 
                 if not ans:
-                    print("Answer cannot be blank.")
+                    print(colored("Answer cannot be blank.", WARNING_CLR))
                     continue
 
         self.answer = ans
@@ -114,7 +120,7 @@ class Question:
         """
             function which recaps the question with all its information to the user before saving it
         """
-        print("Question created!")
+        print(colored("Question created!", PASS_CLR))
         print(f"    Type of question: {self.type}")
         print(f"    Question content: {self.content}")
         if self.type == "quiz":
@@ -163,7 +169,7 @@ class Question:
         while True:
             id = input("Enter the ID of the question: ").strip()
             if not id:
-                print("Id cannot be blank")
+                print(colored("Id cannot be blank", WARNING_CLR))
                 continue
 
             with open(Question.json_file, "r") as file:
@@ -176,7 +182,7 @@ class Question:
                     else:
                         continue
 
-            print("Question not found")
+            print(colored("Question not found", ERROR_CLR))
             continue
 
     @staticmethod
@@ -195,7 +201,7 @@ class Question:
             json.dump(file_data, file, indent=4)
             file.truncate()
 
-        print(f"Question with id: {id} is now disabled.")
+        print(colored(f"Question with id: {id} is now disabled.", PASS_CLR))
 
     @staticmethod
     def enable(id: str) -> None:
@@ -213,7 +219,7 @@ class Question:
             json.dump(file_data, file, indent=4)
             file.truncate()
 
-        print(f"Question with id: {id} is now enabled.")
+        print(colored(f"Question with id: {id} is now enabled.", PASS_CLR))
 
     @classmethod
     def show_types(cls) -> None:
@@ -221,7 +227,7 @@ class Question:
             function which shows possible type of question available
         """
         print("Possible types of questions: ")
-        for idx, type in enumerate(cls.types.values()):
+        for idx, type in cls.types.items():
             print(f"{idx} - {type} question")
 
     @staticmethod
