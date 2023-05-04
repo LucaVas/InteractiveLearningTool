@@ -3,6 +3,7 @@ import uuid
 import json
 from typing import Any
 from termcolor import colored
+from config import json_file
 
 PASS_CLR = "green"
 WARNING_CLR = "yellow"
@@ -13,8 +14,6 @@ MODE_CLR = "blue"
 class Question:
 
     types = {1: "quiz", 2: "free-form"}
-
-    json_file = "../app.json"
 
     def __init__(self, type=None, content=None, options=[]) -> None:
         self.type = type
@@ -113,7 +112,8 @@ class Question:
                 if not ans:
                     print(colored("Answer cannot be blank.", WARNING_CLR))
                     continue
-
+                break
+                    
         self.answer = ans
 
     def recap_question(self) -> None:
@@ -145,7 +145,7 @@ class Question:
             "timesShown": [{}],
         }
 
-        with open(self.json_file, "r+") as file:
+        with open(json_file, "r+") as file:
 
             file_data = json.load(file)
 
@@ -172,7 +172,7 @@ class Question:
                 print(colored("Id cannot be blank", WARNING_CLR))
                 continue
 
-            with open(Question.json_file, "r") as file:
+            with open(json_file, "r") as file:
                 # First we load existing data into a dict.
                 file_data = json.load(file)
                 # Join new_data with file_data inside emp_details
@@ -190,7 +190,7 @@ class Question:
         """
         Function which disables a question by id
         """
-        with open(Question.json_file, "r+") as file:
+        with open(json_file, "r+") as file:
             file_data = json.load(file)
             for question in file_data["questions"]:
                 if question.get("questionId") == id:
@@ -208,7 +208,7 @@ class Question:
         """
         function which enables a question by id
         """
-        with open(Question.json_file, "r+") as file:
+        with open(json_file, "r+") as file:
             file_data = json.load(file)
             for question in file_data["questions"]:
                 if question.get("questionId") == id:

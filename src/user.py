@@ -2,6 +2,7 @@ import uuid
 import json
 from termcolor import colored
 import re
+from config import json_file
 
 PASS_CLR = "green"
 WARNING_CLR = "yellow"
@@ -13,7 +14,6 @@ class User:
         self.username = username
         self.id = str(uuid.uuid1())
         self.is_user = is_user
-        self.json_file = "../app.json"
 
     def register_user(self) -> None:
         """
@@ -43,7 +43,6 @@ class User:
         else:
             return True
 
-
     def save_new_user(self) -> None:
         """
         Function which saves a new user to the json file
@@ -54,7 +53,7 @@ class User:
             "userName": self.username,
         }
 
-        with open(self.json_file, "r+") as file:
+        with open(json_file, "r+") as file:
             # First we load existing data into a dict.
             file_data = json.load(file)
             # Join new_data with file_data inside emp_details
@@ -68,7 +67,7 @@ class User:
         """
         function which adds new user's information to the previously questions added (times shown and times answered)
         """
-        with open(self.json_file, "r+") as file:
+        with open(json_file, "r+") as file:
             file_data = json.load(file)
             for question in file_data["questions"]:
                 question["timesAnswered"][0].update({self.id: 0})
@@ -80,7 +79,7 @@ class User:
         """
         Function which set current user to existing user, if found
         """
-        with open(self.json_file, "r") as file:
+        with open(json_file, "r") as file:
             # First we load existing data into a dict.
             file_data = json.load(file)
 

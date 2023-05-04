@@ -1,10 +1,11 @@
 # Session class responsible for welcoming and goodbying
 import pyfiglet  # type: ignore
-from src.question import Question 
+from question import Question 
 from user import User
 import sys
 import json
 import random
+from config import json_file, results_file, app_name
 from termcolor import colored
 
 PASS_CLR = "green"
@@ -15,7 +16,6 @@ MODE_CLR = "blue"
 
 class Session:
 
-    app_name = "InteLTool"
     modes = {
         1: "question",
         2: "statistics",
@@ -25,8 +25,6 @@ class Session:
         6: "reset questions",
     }
 
-    json_file = "../app.json"
-    results_file = "../results.txt"
 
     def __init__(self, mode=None) -> None:
         self.mode = mode
@@ -36,7 +34,7 @@ class Session:
         """
             function which welcomes the user to inteltool
         """
-        print(pyfiglet.figlet_format(f"\nWelcome to {cls.app_name}!", font="digital"))
+        print(pyfiglet.figlet_format(f"\nWelcome to {app_name}!", font="digital"))
 
     @classmethod
     def show_modes(cls) -> None:
@@ -188,7 +186,7 @@ class Session:
 
         print(colored("\n--> Statistics mode started <--\n", MODE_CLR))
 
-        with open(Session.json_file, "r") as file:
+        with open(json_file, "r") as file:
             # First we load existing data into a dict.
             file_data = json.load(file)
 
@@ -233,7 +231,7 @@ class Session:
         # indexes of questions enabled
         available_questions_idx: list[int] = []
 
-        with open(self.json_file, "r+") as file:
+        with open(json_file, "r+") as file:
             file_data = json.load(file)
 
             for question in file_data["questions"]:
@@ -315,7 +313,7 @@ class Session:
         test_in_progress = True
         answers = 0.0
         # Ask user how many question they want to play
-        with open(self.json_file, "r+") as file:
+        with open(json_file, "r+") as file:
             file_data = json.load(file)
 
             idx_of_questions_available: list[int] = []
@@ -405,7 +403,7 @@ class Session:
                 "Your results are saved in results.txt for future consultation.\n"
             ]
 
-            with open(self.results_file, "a") as file:
+            with open(results_file, "a") as file:
                 file.write("\n".join(results_to_file))
 
             print()
@@ -439,7 +437,7 @@ class Session:
                 .lower()
                 .strip()
             ) == "y":
-                with open(self.json_file, "r+") as file:
+                with open(json_file, "r+") as file:
                     file_data = json.load(file)
 
                     for question in file_data["questions"]:
